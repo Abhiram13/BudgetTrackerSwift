@@ -13,6 +13,7 @@
 		838747E7298E264800A6757F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 838747E5298E264800A6757F /* Main.storyboard */; };
 		838747E9298E264B00A6757F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 838747E8298E264B00A6757F /* Assets.xcassets */; };
 		838747EC298E264B00A6757F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 838747EA298E264B00A6757F /* LaunchScreen.storyboard */; };
+		838747F5298E2B3500A6757F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838747F4298E2B3500A6757F /* DatabaseService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		838747E8298E264B00A6757F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		838747EB298E264B00A6757F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		838747ED298E264B00A6757F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		838747F4298E2B3500A6757F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		838747DE298E264800A6757F /* BudgetTracker */ = {
 			isa = PBXGroup;
 			children = (
+				838747F3298E2A3C00A6757F /* Services */,
 				838747DF298E264800A6757F /* AppDelegate.swift */,
 				838747E1298E264800A6757F /* SceneDelegate.swift */,
 				838747E3298E264800A6757F /* ViewController.swift */,
@@ -65,6 +68,14 @@
 				838747ED298E264B00A6757F /* Info.plist */,
 			);
 			path = BudgetTracker;
+			sourceTree = "<group>";
+		};
+		838747F3298E2A3C00A6757F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				838747F4298E2B3500A6757F /* DatabaseService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +151,7 @@
 			files = (
 				838747E4298E264800A6757F /* ViewController.swift in Sources */,
 				838747E0298E264800A6757F /* AppDelegate.swift in Sources */,
+				838747F5298E2B3500A6757F /* DatabaseService.swift in Sources */,
 				838747E2298E264800A6757F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
