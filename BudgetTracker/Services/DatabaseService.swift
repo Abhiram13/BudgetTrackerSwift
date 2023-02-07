@@ -14,6 +14,10 @@ enum Table {
 
 extension String: Error {};
 
+enum MyError: Error {
+    case runtimeError(String)
+}
+
 class Database {
     private let dbPath: String;
     var db: OpaquePointer?;
@@ -45,15 +49,27 @@ class Database {
     }
     
     private func OpenDatabase() -> OpaquePointer? {
-        let fileURL: String = self.fetchFileUrl();
-        
-        if sqlite3_open(fileURL, &db) != SQLITE_OK {
-            print("error opening database")
-            return nil;
-        } else {
-            print("Successfully opened connection to database at \(dbPath) \(fileURL)");
-            return db;
+        do {
+            try self.throwingFunc()
+        } catch MyError.runtimeError(let error) {
+            print("here \(error)");
+            NotificationCenter.default.post(name: Notification.Name("com.bt.alert"), object: nil, userInfo: ["error": error]);
+        } catch let err {
+            print("here again \(err)");
         }
+//        let fileURL: String = self.fetchFileUrl();
+//
+//        if sqlite3_open(fileURL, &db) != SQLITE_OK {
+//            print("error opening database")
+//            return nil;
+//        } else {
+//            print("Successfully opened connection to database at \(dbPath) \(fileURL)");
+            return db;
+//        }
+    }
+    
+    private func throwingFunc() throws -> Void {
+        throw MyError.runtimeError("Some error");
     }
     
     private func createTable(createQuery: String) throws -> Void {
