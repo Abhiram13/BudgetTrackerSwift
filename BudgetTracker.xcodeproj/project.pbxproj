@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		837BBE732992A19E00EDF881 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837BBE722992A19E00EDF881 /* TabBarController.swift */; };
+		837BBE782992B43E00EDF881 /* CategoryHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837BBE772992B43E00EDF881 /* CategoryHomeController.swift */; };
 		838747E0298E264800A6757F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838747DF298E264800A6757F /* AppDelegate.swift */; };
 		838747E2298E264800A6757F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838747E1298E264800A6757F /* SceneDelegate.swift */; };
 		838747E4298E264800A6757F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838747E3298E264800A6757F /* HomeViewController.swift */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		837BBE722992A19E00EDF881 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		837BBE772992B43E00EDF881 /* CategoryHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHomeController.swift; sourceTree = "<group>"; };
 		838747DC298E264800A6757F /* BudgetTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838747DF298E264800A6757F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		838747E1298E264800A6757F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,12 +39,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		837BBE742992A29300EDF881 /* UIViewControllers */ = {
+		837BBE742992A29300EDF881 /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				837BBE762992A5D000EDF881 /* Category */,
+				837BBE752992A5BA00EDF881 /* Home */,
+				837BBE722992A19E00EDF881 /* TabBarController.swift */,
+			);
+			path = TabBarController;
+			sourceTree = "<group>";
+		};
+		837BBE752992A5BA00EDF881 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				838747E3298E264800A6757F /* HomeViewController.swift */,
 			);
-			path = UIViewControllers;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		837BBE762992A5D000EDF881 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				837BBE772992B43E00EDF881 /* CategoryHomeController.swift */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		838747D3298E264700A6757F = {
@@ -64,13 +84,12 @@
 		838747DE298E264800A6757F /* BudgetTracker */ = {
 			isa = PBXGroup;
 			children = (
-				837BBE742992A29300EDF881 /* UIViewControllers */,
+				837BBE742992A29300EDF881 /* TabBarController */,
 				838747F3298E2A3C00A6757F /* Services */,
 				838747DF298E264800A6757F /* AppDelegate.swift */,
 				838747E1298E264800A6757F /* SceneDelegate.swift */,
 				838747E8298E264B00A6757F /* Assets.xcassets */,
 				838747ED298E264B00A6757F /* Info.plist */,
-				837BBE722992A19E00EDF881 /* TabBarController.swift */,
 			);
 			path = BudgetTracker;
 			sourceTree = "<group>";
@@ -152,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				837BBE782992B43E00EDF881 /* CategoryHomeController.swift in Sources */,
 				838747E4298E264800A6757F /* HomeViewController.swift in Sources */,
 				838747E0298E264800A6757F /* AppDelegate.swift in Sources */,
 				838747F5298E2B3500A6757F /* DatabaseService.swift in Sources */,

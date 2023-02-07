@@ -5,10 +5,12 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let homeViewController = UINavigationController(rootViewController: HomeViewController());
+        let homeNC = UINavigationController(rootViewController: HomeViewController());
+        let categoryNC = UINavigationController(rootViewController: CategoryHomeController());
         
         // set title for view controllers
-        homeViewController.title = "Home";
+        homeNC.title = "Home";
+        categoryNC.title = "Categories";
         
         self.tabBar.backgroundColor = .white;
         self.tabBar.layer.shadowColor = UIColor.gray.cgColor;
@@ -16,6 +18,6 @@ class TabBarController: UITabBarController {
         self.tabBar.layer.shadowOffset = CGSize(width: 0, height: -1)
         self.tabBar.layer.shadowRadius = 5
         
-        self.setViewControllers([homeViewController], animated: false);
+        self.setViewControllers([homeNC, categoryNC], animated: false);
     }
 }
