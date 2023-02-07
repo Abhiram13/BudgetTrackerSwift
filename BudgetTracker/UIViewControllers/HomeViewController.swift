@@ -1,23 +1,20 @@
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemCyan;
         
-//        let _ = Database();
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(notify(_:)), name: Notification.Name("com.bt.alert"), object: nil);
+//        NotificationCenter.default.addObserver(self, selector: #selector(notify(_:)), name: Notification.Name("com.bt.alert"), object: nil);
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let _ = Database();
+//        let _ = Database();
     }
     
     @objc private func notify(_ notification: Notification) {
         let alert: UIAlertController = AlertController(message: notification.userInfo!["error"] as! String);
-//
         self.present(alert, animated: true, completion: nil)
         print("This alert has been notified");
     }
