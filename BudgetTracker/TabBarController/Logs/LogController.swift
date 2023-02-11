@@ -84,7 +84,7 @@ class LogView: UIView {
         widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: 0.9).isActive = true;
         leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 20).isActive = true;
         layer.cornerRadius = 10;
-        
+        heightAnchor.constraint(equalToConstant: 100).isActive = true;
         
         date.translatesAutoresizingMaskIntoConstraints = false;
         date.text = self.dateValue;
@@ -92,6 +92,7 @@ class LogView: UIView {
         date.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true;
         date.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2).isActive = true;
         date.numberOfLines = 0;
+        date.font = .systemFont(ofSize: 15, weight: .light)
         
         title.translatesAutoresizingMaskIntoConstraints = false;
         title.text = self.titleValue
@@ -99,6 +100,7 @@ class LogView: UIView {
         title.topAnchor.constraint(equalTo: date.topAnchor).isActive = true;
         title.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7).isActive = true;
         title.numberOfLines = 0;
+        title.font = .systemFont(ofSize: 17, weight: .medium)
         
         info.translatesAutoresizingMaskIntoConstraints = false;
         info.text = self.infoValue;
@@ -106,9 +108,7 @@ class LogView: UIView {
         info.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 5).isActive = true;
         info.widthAnchor.constraint(equalTo: title.widthAnchor).isActive = true;
         info.numberOfLines = 0;
-        info.backgroundColor = .green;
-                
-        heightAnchor.constraint(equalToConstant: 100).isActive = true;
-        backgroundColor = .cyan;
+        info.font = .systemFont(ofSize: 16, weight: .regular)
+        info.textColor = .systemGray
     }
 }
