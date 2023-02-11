@@ -1,6 +1,10 @@
 import UIKit;
 import SQLite3;
 
+struct LoggerStorage {
+    static let key = "logsKey";
+}
+
 class Storage {
     private let key: String;
     private let defaults: UserDefaults;
@@ -22,11 +26,15 @@ class Storage {
         
         return nil;
     }
+    
+    func remove() {
+        defaults.removeObject(forKey: key);
+    }
 }
 
 class Logger {
     private static let db: OpaquePointer = Database().db!;
-    private static let storage = Storage(key: "logsKey");
+    private static let storage = Storage(key: LoggerStorage.key);
     
     private static func getCurrentDate() -> String {
         let dateFormatter = DateFormatter()
@@ -44,7 +52,8 @@ class Logger {
     }
     
     static func list() {
-        let logs: [LoggerType] = storage.get()!;
+        let data: [LoggerType]? = storage.get();
+        let logs: [LoggerType] = data != nil ? data! : [];
         print("HERE IT IS")
         print("Logs: \(logs)");
     }

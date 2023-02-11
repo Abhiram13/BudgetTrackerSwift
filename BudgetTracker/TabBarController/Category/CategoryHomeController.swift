@@ -31,7 +31,7 @@ class CategoryHomeController: UIViewController {
 
 class CategoryView: UIView {
     override func didMoveToSuperview() {
-        self.initalise();
+        self.superview != nil ? self.initalise() : nil;
     }
     
     private func initalise() {

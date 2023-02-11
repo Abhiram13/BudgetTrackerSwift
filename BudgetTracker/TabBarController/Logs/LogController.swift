@@ -33,11 +33,13 @@ class LogController: UIViewController {
         print("HERE IT IS AGAIN");
         Logger.list();
     }
+    
+    
 }
 
 class LogView: UIView {
     override func didMoveToSuperview() {
-        self.initalise();
+        self.superview != nil ? self.initalise() : nil;
     }
     
     private func initalise() {
