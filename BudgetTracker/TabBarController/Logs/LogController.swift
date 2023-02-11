@@ -30,10 +30,10 @@ class LogController: UIViewController {
         let logs: [LoggerType] = Logger.list();
         
         if logs.count > 0 {
+            noLogsLabel.removeFromSuperview();
             for log in logs {
                 stackView.addArrangedSubview(LogView(info: log.information, title: log.title, date: log.date));
             }
-            noLogsLabel.isHidden = true;
         } else {
             stackView.addArrangedSubview(noLogsLabel);
             
@@ -42,6 +42,12 @@ class LogController: UIViewController {
             noLogsLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 250).isActive = true;
             noLogsLabel.text = "No Logs";
             noLogsLabel.font = .systemFont(ofSize: 20, weight: .medium);
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        stackView.subviews.forEach { loggerView in
+            loggerView.removeFromSuperview();
         }
     }
 }
@@ -84,7 +90,6 @@ class LogView: UIView {
         widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: 0.9).isActive = true;
         leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 20).isActive = true;
         layer.cornerRadius = 10;
-//        heightAnchor.constraint(equalToConstant: 100).isActive = true;
         
         date.translatesAutoresizingMaskIntoConstraints = false;
         date.text = self.dateValue;

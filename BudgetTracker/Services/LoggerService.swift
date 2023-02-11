@@ -52,7 +52,7 @@ class Logger {
     
     static func list() -> [LoggerType] {
         let data: [LoggerType]? = storage.get();
-        let logs: [LoggerType] = data != nil ? data! : [];
+        let logs: [LoggerType] = data != nil ? data! : [];        
         return logs.sorted {$0.id > $1.id};
     }
 }
