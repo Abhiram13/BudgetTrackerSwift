@@ -4,6 +4,7 @@ class LogController: UIViewController {
     let scroller = UIScrollView();
     let stackView = UIStackView();
     let logs: [LoggerType] = [];
+    let noLogsLabel = UILabel();
     
     override func viewDidLoad() {
         self.view.backgroundColor = .white;
@@ -28,8 +29,19 @@ class LogController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let logs: [LoggerType] = Logger.list();
         
-        for log in logs {
-            stackView.addArrangedSubview(LogView(info: log.information, title: log.title, date: log.date));
+        if logs.count > 0 {
+            for log in logs {
+                stackView.addArrangedSubview(LogView(info: log.information, title: log.title, date: log.date));
+            }
+            noLogsLabel.isHidden = true;
+        } else {
+            stackView.addArrangedSubview(noLogsLabel);
+            
+            noLogsLabel.translatesAutoresizingMaskIntoConstraints = false;
+            noLogsLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 170).isActive = true;
+            noLogsLabel.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 250).isActive = true;
+            noLogsLabel.text = "No Logs";
+            noLogsLabel.font = .systemFont(ofSize: 20, weight: .medium);
         }
     }
 }

@@ -33,7 +33,6 @@ class Storage {
 }
 
 class Logger {
-    private static let db: OpaquePointer = Database().db!;
     private static let storage = Storage(key: LoggerStorage.key);
     
     private static func getCurrentDate() -> String {
