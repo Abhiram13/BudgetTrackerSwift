@@ -1,23 +1,6 @@
 import Foundation;
 import SQLite3;
 
-struct ExistFilePath {
-    let isExist: Bool;
-    let path: String;
-}
-
-enum Table {
-    static let transactions = "transactions";
-    static let categories = "categories";
-    static let banks = "banks";
-}
-
-extension String: Error {};
-
-enum MyError: Error {
-    case runtimeError(String)
-}
-
 class Database {
     private let dbPath: String;
     var db: OpaquePointer?;
@@ -25,10 +8,11 @@ class Database {
     init() {
         self.dbPath = "transactions.sqlite";
         self.db = OpenDatabase();
-        //        self.createBankTable();
-//        self.createCategoryTable();
-        self.dropTable(type: "Categories");
-        //        self.createTransactionsTable();
+        self.createLogTable();
+        //self.createBankTable();
+        //self.createCategoryTable();
+        //self.dropTable(type: "Categories");
+        //self.createTransactionsTable();
     }
     
     private func fetchFileUrl() -> String {
@@ -50,14 +34,6 @@ class Database {
     }
     
     private func OpenDatabase() -> OpaquePointer? {
-//        do {
-//            try self.throwingFunc()
-//        } catch MyError.runtimeError(let error) {
-//            print("here \(error)");
-
-//        } catch let err {
-//            print("here again \(err)");
-//        }
         let fileURL: String = self.fetchFileUrl();
 
         if sqlite3_open(fileURL, &db) != SQLITE_OK {
@@ -70,41 +46,49 @@ class Database {
         }
     }
     
-    private func throwingFunc() throws -> Void {
-        throw MyError.runtimeError("Some error");
-    }
-    
-    private func createTable(createQuery: String, type: String) throws -> Void {
+    private func createTable(createQuery: String, table: Table) throws -> Void {
         if (createQuery.isEmpty) {
             throw "Query not provided or invalid";
+        }
+        
+        if self.check(table: table) {
+            print("\(table) was already created");
+            return;
         }
         
         var createTableStatement: OpaquePointer? = nil;
         
         if sqlite3_prepare_v2(self.db, createQuery, -1, &createTableStatement, nil) == SQLITE_OK {
-            sqlite3_step(createTableStatement) == SQLITE_DONE ? print("table created.") : print("table could not be created.");
-            notify(message: "\(type) create table prepared");
+            sqlite3_step(createTableStatement) == SQLITE_DONE ? print("\(table) table created.") : print("\(table) could not be created.");
+            notify(message: "\(table) create table prepared");
         } else {
-            print("CREATE TABLE statement could not be prepared.");
-            notify(message: "\(type) create table could not be prepared");
+            print("CREATE TABLE statement for \(table) could not be prepared.");
+            notify(message: "\(table) create table could not be prepared");
         }
         
         sqlite3_finalize(createTableStatement);
     }
     
-    private func createTransactionsTable() {
-        if self.check(table: "transactions") {
-            return;
-        }
+    private func createLogTable() -> Void {
+        let createLogQuery = "CREATE TABLE IF NOT EXISTS logs(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, information TEXT, date TEXT)";
         
+        do {
+            try self.createTable(createQuery: createLogQuery, table: .logs);
+        } catch let error {
+            print(error.localizedDescription);
+        }
+    }
+    
+    private func createTransactionsTable() {
         let createTableString = """
             CREATE TABLE IF NOT EXISTS transactions(
-                id INTEGER PRIMARY KEY AUTOINCREMENT, category_id INTEGER, description TEXT, to_bank_id INTEGER, amount INTEGER, type TEXT, from_bank_id INTEGER, due INTEGER, date TEXT
+                id INTEGER PRIMARY KEY AUTOINCREMENT, rowId TEXT, categoryId INTEGER, description TEXT, toBankId INTEGER, amount INTEGER,
+                type TEXT, fromBankId INTEGER, due INTEGER, date TEXT
             );
         """;
         
         do {
-            try self.createTable(createQuery: createTableString, type: "Transactions");
+            try self.createTable(createQuery: createTableString, table: .transactions);
         } catch let error {
             print(error.localizedDescription);
         }
@@ -132,7 +116,7 @@ class Database {
     }
     
     private func createCategoryTable() {
-        if self.check(table: "categories") {
+        if self.check(table: .categories) {
             notify(message: "Category table already existed");
             return;
         }
@@ -144,7 +128,7 @@ class Database {
         """;
         
         do {
-            try self.createTable(createQuery: createTableString, type: "Category");
+            try self.createTable(createQuery: createTableString, table: .categories);
         } catch let error {
             print(error.localizedDescription);
             notify(message: error.localizedDescription);
@@ -167,7 +151,7 @@ class Database {
     }
     
     private func createBankTable() {
-        if self.check(table: "banks") {
+        if self.check(table: .banks) {
             return;
         }
         
@@ -191,7 +175,7 @@ class Database {
         sqlite3_finalize(createTableStatement)
     }
     
-    private func check(table: String) -> Bool {
+    private func check(table: Table) -> Bool {
         let createTableString = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='\(table)';"
         var createTableStatement: OpaquePointer? = nil
         var x: Int;

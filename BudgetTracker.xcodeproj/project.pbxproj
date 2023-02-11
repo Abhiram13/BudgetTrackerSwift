@@ -15,6 +15,9 @@
 		838747E9298E264B00A6757F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 838747E8298E264B00A6757F /* Assets.xcassets */; };
 		838747F5298E2B3500A6757F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838747F4298E2B3500A6757F /* DatabaseService.swift */; };
 		838B7DF729977CBB00A0BC26 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7DF629977CBB00A0BC26 /* NotificationService.swift */; };
+		838B7DFA29977E3000A0BC26 /* DatabaseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7DF929977E3000A0BC26 /* DatabaseTypes.swift */; };
+		838B7DFC299783B000A0BC26 /* LoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7DFB299783B000A0BC26 /* LoggerService.swift */; };
+		838B7DFE2997841300A0BC26 /* LoggerTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7DFD2997841300A0BC26 /* LoggerTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		838747ED298E264B00A6757F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838747F4298E2B3500A6757F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		838B7DF629977CBB00A0BC26 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		838B7DF929977E3000A0BC26 /* DatabaseTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTypes.swift; sourceTree = "<group>"; };
+		838B7DFB299783B000A0BC26 /* LoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerService.swift; sourceTree = "<group>"; };
+		838B7DFD2997841300A0BC26 /* LoggerTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +108,7 @@
 			children = (
 				838747F4298E2B3500A6757F /* DatabaseService.swift */,
 				838B7DF629977CBB00A0BC26 /* NotificationService.swift */,
+				838B7DFB299783B000A0BC26 /* LoggerService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -109,6 +116,8 @@
 		838B7DF829977DF600A0BC26 /* StructTypes */ = {
 			isa = PBXGroup;
 			children = (
+				838B7DF929977E3000A0BC26 /* DatabaseTypes.swift */,
+				838B7DFD2997841300A0BC26 /* LoggerTypes.swift */,
 			);
 			path = StructTypes;
 			sourceTree = "<group>";
@@ -182,10 +191,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				838B7DFA29977E3000A0BC26 /* DatabaseTypes.swift in Sources */,
 				837BBE782992B43E00EDF881 /* CategoryHomeController.swift in Sources */,
 				838747E4298E264800A6757F /* HomeViewController.swift in Sources */,
 				838B7DF729977CBB00A0BC26 /* NotificationService.swift in Sources */,
 				838747E0298E264800A6757F /* AppDelegate.swift in Sources */,
+				838B7DFE2997841300A0BC26 /* LoggerTypes.swift in Sources */,
+				838B7DFC299783B000A0BC26 /* LoggerService.swift in Sources */,
 				838747F5298E2B3500A6757F /* DatabaseService.swift in Sources */,
 				837BBE732992A19E00EDF881 /* TabBarController.swift in Sources */,
 				838747E2298E264800A6757F /* SceneDelegate.swift in Sources */,
