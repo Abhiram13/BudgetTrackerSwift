@@ -18,6 +18,7 @@ class TabBarController: UITabBarController {
         self.tabBar.layer.shadowOffset = CGSize(width: 0, height: -1)
         self.tabBar.layer.shadowRadius = 5
         
-        self.setViewControllers([homeNC, categoryNC], animated: false);
+//        self.setViewControllers([homeNC, categoryNC], animated: false);
+        self.setViewControllers([categoryNC, homeNC], animated: false);
     }
 }
