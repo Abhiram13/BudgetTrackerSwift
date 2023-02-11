@@ -10,7 +10,7 @@ class Database {
         self.db = OpenDatabase();
         self.createLogTable();
         //self.createBankTable();
-        //self.createCategoryTable();
+//        self.createCategoryTable();
         //self.dropTable(type: "Categories");
         //self.createTransactionsTable();
     }
@@ -116,11 +116,6 @@ class Database {
     }
     
     private func createCategoryTable() {
-        if self.check(table: .categories) {
-            notify(message: "Category table already existed");
-            return;
-        }
-        
         let createTableString = """
             CREATE TABLE IF NOT EXISTS categories(
                 id INTEGER PRIMARY KEY AUTOINCREMENT, rowId TEXT, name TEXT, color TEXT, icon TEXT, description TEXT
@@ -131,7 +126,7 @@ class Database {
             try self.createTable(createQuery: createTableString, table: .categories);
         } catch let error {
             print(error.localizedDescription);
-            notify(message: error.localizedDescription);
+            Logger.create(title: "Error at create category table", info: error.localizedDescription);
         }
     }
     
@@ -140,11 +135,10 @@ class Database {
         var createTableStatement: OpaquePointer? = nil;
         
         if sqlite3_prepare_v2(self.db, deletQuery, -1, &createTableStatement, nil) == SQLITE_OK {
-            sqlite3_step(createTableStatement) == SQLITE_DONE ? print("table deleted.") : print("table could not be deleted.");
-            notify(message: "\(type) delete table prepared");
+            let isDone: Bool = sqlite3_step(createTableStatement) == SQLITE_DONE;
+            isDone ? print("table deleted.") : print("table could not be deleted.");
         } else {
             print("DROP TABLE statement could not be prepared.");
-            notify(message: "\(type) delete table could not be prepared");
         }
         
         sqlite3_finalize(createTableStatement);
