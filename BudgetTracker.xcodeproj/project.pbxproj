@@ -20,6 +20,7 @@
 		838B7DFE2997841300A0BC26 /* LoggerTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7DFD2997841300A0BC26 /* LoggerTypes.swift */; };
 		838B7E01299789A000A0BC26 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E00299789A000A0BC26 /* LogController.swift */; };
 		838B7E032997AFEB00A0BC26 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E022997AFEB00A0BC26 /* DateService.swift */; };
+		838B7E052997CE3300A0BC26 /* InsertCategoryConctroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E042997CE3300A0BC26 /* InsertCategoryConctroller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		838B7DFD2997841300A0BC26 /* LoggerTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTypes.swift; sourceTree = "<group>"; };
 		838B7E00299789A000A0BC26 /* LogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		838B7E022997AFEB00A0BC26 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
+		838B7E042997CE3300A0BC26 /* InsertCategoryConctroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertCategoryConctroller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				837BBE772992B43E00EDF881 /* CategoryHomeController.swift */,
+				838B7E042997CE3300A0BC26 /* InsertCategoryConctroller.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				838B7DFE2997841300A0BC26 /* LoggerTypes.swift in Sources */,
 				838B7DFC299783B000A0BC26 /* LoggerService.swift in Sources */,
 				838747F5298E2B3500A6757F /* DatabaseService.swift in Sources */,
+				838B7E052997CE3300A0BC26 /* InsertCategoryConctroller.swift in Sources */,
 				837BBE732992A19E00EDF881 /* TabBarController.swift in Sources */,
 				838747E2298E264800A6757F /* SceneDelegate.swift in Sources */,
 			);

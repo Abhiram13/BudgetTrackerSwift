@@ -3,11 +3,13 @@ import UIKit;
 class CategoryHomeController: UIViewController {
     let scroller = UIScrollView();
     let stackView = UIStackView();
+    let label = UILabel();
     
     override func viewDidLoad() {
         self.view.backgroundColor = .green;
         
         view.addSubview(scroller);
+        view.addSubview(label);
         
         scroller.addSubview(stackView);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
@@ -23,9 +25,21 @@ class CategoryHomeController: UIViewController {
         stackView.topAnchor.constraint(equalTo: scroller.topAnchor).isActive = true;
         stackView.widthAnchor.constraint(equalTo: scroller.widthAnchor).isActive = true;
         
+        label.translatesAutoresizingMaskIntoConstraints = false;
+        label.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true;
+        label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true;
+        label.text = "Add Category";
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addCategory)));
+        label.isUserInteractionEnabled = true;
+        
         for _ in 0..<5 {
             stackView.addArrangedSubview(CategoryView());
         }
+    }
+    
+    @objc private func addCategory() {
+        self.modalPresentationStyle = .fullScreen;
+        self.present(CategoryAddController(), animated: true, completion: nil);
     }
 }
 
