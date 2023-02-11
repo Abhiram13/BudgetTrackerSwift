@@ -1,8 +1,32 @@
 import UIKit;
 import SQLite3;
 
+class Storage {
+    private let key: String;
+    private let defaults: UserDefaults;
+    
+    init(key: String) {
+        self.key = key
+        self.defaults = UserDefaults.standard;
+    }
+    
+    func set<T: Encodable>(data: T) {
+        self.defaults.set(try? PropertyListEncoder().encode(data), forKey: self.key);
+    }
+    
+    func get<T: Decodable>() -> T? {
+        if let data = UserDefaults.standard.value(forKey: self.key) as? Data {
+            let logs = try? PropertyListDecoder().decode(T.self, from: data);
+            return logs;
+        }
+        
+        return nil;
+    }
+}
+
 class Logger {
     private static let db: OpaquePointer = Database().db!;
+    private static let storage = Storage(key: "logsKey");
     
     private static func getCurrentDate() -> String {
         let dateFormatter = DateFormatter()
@@ -11,26 +35,17 @@ class Logger {
     }
     
     static func create(title: String, info: String) -> Void {
-        let insertStatementString = "INSERT INTO logs (title, information, date) VALUES (?, ?, ?);"
-        var insertStatement: OpaquePointer? = nil
+        let log = LoggerType(title: title, information: info, date: getCurrentDate());
+        let data: [LoggerType]? = storage.get();
+        var arrayOfLogs: [LoggerType] = data != nil ? data! : [];
+        arrayOfLogs.append(log);
         
-        if sqlite3_prepare_v2(self.db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
-            sqlite3_bind_text(insertStatement, 1, (title as NSString).utf8String, -1, nil)
-            sqlite3_bind_text(insertStatement, 2, (info as NSString).utf8String, -1, nil)
-            sqlite3_bind_text(insertStatement, 3, (getCurrentDate() as NSString).utf8String, -1, nil)
-            
-            if sqlite3_step(insertStatement) == SQLITE_DONE {
-                print("Successfully created log.")
-                sqlite3_finalize(insertStatement);
-            } else {
-                print("Could not insert the log.")
-                sqlite3_finalize(insertStatement);
-            }
-        } else {
-            print("INSERT log statement could not be prepared.")
-            sqlite3_finalize(insertStatement);
-        }
-        
-        sqlite3_finalize(insertStatement);
+        storage.set(data: arrayOfLogs);
+    }
+    
+    static func list() {
+        let logs: [LoggerType] = storage.get()!;
+        print("HERE IT IS")
+        print("Logs: \(logs)");
     }
 }

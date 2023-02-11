@@ -28,6 +28,11 @@ class LogController: UIViewController {
             stackView.addArrangedSubview(LogView());
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("HERE IT IS AGAIN");
+        Logger.list();
+    }
 }
 
 class LogView: UIView {

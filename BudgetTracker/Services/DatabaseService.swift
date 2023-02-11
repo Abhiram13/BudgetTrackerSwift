@@ -53,6 +53,7 @@ class Database {
         
         if self.check(table: table) {
             print("\(table) was already created");
+            Logger.create(title: "Already created", info: "\(table) was already created");
             return;
         }
         
@@ -60,7 +61,8 @@ class Database {
         
         if sqlite3_prepare_v2(self.db, createQuery, -1, &createTableStatement, nil) == SQLITE_OK {
             sqlite3_step(createTableStatement) == SQLITE_DONE ? print("\(table) table created.") : print("\(table) could not be created.");
-            notify(message: "\(table) create table prepared");
+//            notify(message: "\(table) create table prepared");
+            Logger.create(title: "Table created done", info: "\(table) create table prepared");
         } else {
             print("CREATE TABLE statement for \(table) could not be prepared.");
             notify(message: "\(table) create table could not be prepared");

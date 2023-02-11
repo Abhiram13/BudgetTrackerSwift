@@ -1,7 +1,6 @@
 import UIKit;
 
-struct LoggerType {
-    let id: String;
+struct LoggerType: Codable {
     let title: String;
     let information: String;
     let date: String;
