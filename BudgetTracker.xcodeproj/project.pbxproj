@@ -19,6 +19,7 @@
 		838B7DFC299783B000A0BC26 /* LoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7DFB299783B000A0BC26 /* LoggerService.swift */; };
 		838B7DFE2997841300A0BC26 /* LoggerTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7DFD2997841300A0BC26 /* LoggerTypes.swift */; };
 		838B7E01299789A000A0BC26 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E00299789A000A0BC26 /* LogController.swift */; };
+		838B7E032997AFEB00A0BC26 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E022997AFEB00A0BC26 /* DateService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		838B7DFB299783B000A0BC26 /* LoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerService.swift; sourceTree = "<group>"; };
 		838B7DFD2997841300A0BC26 /* LoggerTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerTypes.swift; sourceTree = "<group>"; };
 		838B7E00299789A000A0BC26 /* LogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
+		838B7E022997AFEB00A0BC26 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				838747F4298E2B3500A6757F /* DatabaseService.swift */,
 				838B7DF629977CBB00A0BC26 /* NotificationService.swift */,
 				838B7DFB299783B000A0BC26 /* LoggerService.swift */,
+				838B7E022997AFEB00A0BC26 /* DateService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				838B7E032997AFEB00A0BC26 /* DateService.swift in Sources */,
 				838B7DFA29977E3000A0BC26 /* DatabaseTypes.swift in Sources */,
 				837BBE782992B43E00EDF881 /* CategoryHomeController.swift in Sources */,
 				838747E4298E264800A6757F /* HomeViewController.swift in Sources */,

@@ -38,23 +38,22 @@ class Logger {
     
     private static func getCurrentDate() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+        dateFormatter.dateFormat = DateFormats.shortDateWithTimePeriod.rawValue;
         return dateFormatter.string(from: Date())
     }
     
     static func create(title: String, info: String) -> Void {
-        let log = LoggerType(title: title, information: info, date: getCurrentDate());
         let data: [LoggerType]? = storage.get();
         var arrayOfLogs: [LoggerType] = data != nil ? data! : [];
+        let log = LoggerType(id: arrayOfLogs.count + 1, title: title, information: info, date: getCurrentDate());
         arrayOfLogs.append(log);
         
         storage.set(data: arrayOfLogs);
     }
     
-    static func list() {
+    static func list() -> [LoggerType] {
         let data: [LoggerType]? = storage.get();
         let logs: [LoggerType] = data != nil ? data! : [];
-        print("HERE IT IS")
-        print("Logs: \(logs)");
+        return logs.sorted {$0.id > $1.id};
     }
 }
