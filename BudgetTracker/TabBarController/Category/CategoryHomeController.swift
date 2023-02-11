@@ -22,7 +22,7 @@ class CategoryHomeController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         stackView.topAnchor.constraint(equalTo: scroller.topAnchor).isActive = true;
         stackView.widthAnchor.constraint(equalTo: scroller.widthAnchor).isActive = true;
-//
+        
         for _ in 0..<5 {
             stackView.addArrangedSubview(CategoryView());
         }

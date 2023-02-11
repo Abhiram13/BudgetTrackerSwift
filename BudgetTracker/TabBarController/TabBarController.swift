@@ -7,10 +7,12 @@ class TabBarController: UITabBarController {
         
         let homeNC = UINavigationController(rootViewController: HomeViewController());
         let categoryNC = UINavigationController(rootViewController: CategoryHomeController());
+        let logVC = LogController();
         
         // set title for view controllers
         homeNC.title = "Home";
         categoryNC.title = "Categories";
+        logVC.title = "Logs";
         
         self.tabBar.backgroundColor = .white;
         self.tabBar.layer.shadowColor = UIColor.gray.cgColor;
@@ -19,6 +21,6 @@ class TabBarController: UITabBarController {
         self.tabBar.layer.shadowRadius = 5
         
 //        self.setViewControllers([homeNC, categoryNC], animated: false);
-        self.setViewControllers([categoryNC, homeNC], animated: false);
+        self.setViewControllers([categoryNC, homeNC, logVC], animated: false);
     }
 }
