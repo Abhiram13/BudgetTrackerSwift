@@ -22,8 +22,7 @@ class CategoryHomeController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         stackView.topAnchor.constraint(equalTo: scroller.topAnchor).isActive = true;
         stackView.widthAnchor.constraint(equalTo: scroller.widthAnchor).isActive = true;
-        stackView.backgroundColor = .purple;
-        
+//
         for _ in 0..<5 {
             stackView.addArrangedSubview(CategoryView());
         }
@@ -48,8 +47,8 @@ class CategoryView: UIView {
         widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: 0.9).isActive = true;
         leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 20).isActive = true;
         heightAnchor.constraint(equalToConstant: 60).isActive = true;
-        backgroundColor = .cyan;
         layer.cornerRadius = 10;
+//        backgroundColor = .cyan;
         
         circle.translatesAutoresizingMaskIntoConstraints = false;
         circle.widthAnchor.constraint(equalToConstant: 50).isActive = true;

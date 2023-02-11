@@ -26,7 +26,8 @@ class Database {
         self.dbPath = "transactions.sqlite";
         self.db = OpenDatabase();
         //        self.createBankTable();
-        //        self.createCategoryTable();
+//        self.createCategoryTable();
+        self.dropTable(type: "Categories");
         //        self.createTransactionsTable();
     }
     
@@ -49,30 +50,31 @@ class Database {
     }
     
     private func OpenDatabase() -> OpaquePointer? {
-        do {
-            try self.throwingFunc()
-        } catch MyError.runtimeError(let error) {
-            print("here \(error)");
-            NotificationCenter.default.post(name: Notification.Name("com.bt.alert"), object: nil, userInfo: ["error": error]);
-        } catch let err {
-            print("here again \(err)");
-        }
-//        let fileURL: String = self.fetchFileUrl();
-//
-//        if sqlite3_open(fileURL, &db) != SQLITE_OK {
-//            print("error opening database")
-//            return nil;
-//        } else {
-//            print("Successfully opened connection to database at \(dbPath) \(fileURL)");
-            return db;
+//        do {
+//            try self.throwingFunc()
+//        } catch MyError.runtimeError(let error) {
+//            print("here \(error)");
+
+//        } catch let err {
+//            print("here again \(err)");
 //        }
+        let fileURL: String = self.fetchFileUrl();
+
+        if sqlite3_open(fileURL, &db) != SQLITE_OK {
+            print("error opening database")
+            notify(message: "error opening database");
+            return nil;
+        } else {
+            print("Successfully opened connection to database at \(dbPath) \(fileURL)");
+            return db;
+        }
     }
     
     private func throwingFunc() throws -> Void {
         throw MyError.runtimeError("Some error");
     }
     
-    private func createTable(createQuery: String) throws -> Void {
+    private func createTable(createQuery: String, type: String) throws -> Void {
         if (createQuery.isEmpty) {
             throw "Query not provided or invalid";
         }
@@ -81,8 +83,10 @@ class Database {
         
         if sqlite3_prepare_v2(self.db, createQuery, -1, &createTableStatement, nil) == SQLITE_OK {
             sqlite3_step(createTableStatement) == SQLITE_DONE ? print("table created.") : print("table could not be created.");
+            notify(message: "\(type) create table prepared");
         } else {
             print("CREATE TABLE statement could not be prepared.");
+            notify(message: "\(type) create table could not be prepared");
         }
         
         sqlite3_finalize(createTableStatement);
@@ -100,7 +104,7 @@ class Database {
         """;
         
         do {
-            try self.createTable(createQuery: createTableString);
+            try self.createTable(createQuery: createTableString, type: "Transactions");
         } catch let error {
             print(error.localizedDescription);
         }
@@ -129,27 +133,37 @@ class Database {
     
     private func createCategoryTable() {
         if self.check(table: "categories") {
+            notify(message: "Category table already existed");
             return;
         }
         
         let createTableString = """
             CREATE TABLE IF NOT EXISTS categories(
-                id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT
+                id INTEGER PRIMARY KEY AUTOINCREMENT, rowId TEXT, name TEXT, color TEXT, icon TEXT, description TEXT
             );
-        """
-        var createTableStatement: OpaquePointer? = nil
+        """;
         
-        if sqlite3_prepare_v2(self.db, createTableString, -1, &createTableStatement, nil) == SQLITE_OK {
-            if sqlite3_step(createTableStatement) == SQLITE_DONE {
-                print("categories table created.")
-            } else {
-                print("categories table could not be created.")
-            }
+        do {
+            try self.createTable(createQuery: createTableString, type: "Category");
+        } catch let error {
+            print(error.localizedDescription);
+            notify(message: error.localizedDescription);
+        }
+    }
+    
+    private func dropTable(type: String) {
+        let deletQuery = "DROP TABLE IF EXISTS categories";
+        var createTableStatement: OpaquePointer? = nil;
+        
+        if sqlite3_prepare_v2(self.db, deletQuery, -1, &createTableStatement, nil) == SQLITE_OK {
+            sqlite3_step(createTableStatement) == SQLITE_DONE ? print("table deleted.") : print("table could not be deleted.");
+            notify(message: "\(type) delete table prepared");
         } else {
-            print("CREATE TABLE categories statement could not be prepared.")
+            print("DROP TABLE statement could not be prepared.");
+            notify(message: "\(type) delete table could not be prepared");
         }
         
-        sqlite3_finalize(createTableStatement)
+        sqlite3_finalize(createTableStatement);
     }
     
     private func createBankTable() {
