@@ -8,7 +8,6 @@ class Database {
     init() {
         self.dbPath = "transactions.sqlite";
         self.db = OpenDatabase();
-        self.createLogTable();
         //self.createBankTable();
 //        self.createCategoryTable();
         //self.dropTable(type: "Categories");
@@ -37,11 +36,10 @@ class Database {
         let fileURL: String = self.fetchFileUrl();
 
         if sqlite3_open(fileURL, &db) != SQLITE_OK {
-            print("error opening database")
-            notify(message: "error opening database");
+            Logger.create(title: "Error at DB", info: "Error opening database");
             return nil;
         } else {
-            print("Successfully opened connection to database at \(dbPath) \(fileURL)");
+            Logger.create(title: "File opened", info: "Successfully opened connection to database at \(fileURL)");
             return db;
         }
     }
@@ -52,7 +50,6 @@ class Database {
         }
         
         if self.check(table: table) {
-            print("\(table) was already created");
             Logger.create(title: "Already created", info: "\(table) was already created");
             return;
         }
@@ -60,25 +57,17 @@ class Database {
         var createTableStatement: OpaquePointer? = nil;
         
         if sqlite3_prepare_v2(self.db, createQuery, -1, &createTableStatement, nil) == SQLITE_OK {
-            sqlite3_step(createTableStatement) == SQLITE_DONE ? print("\(table) table created.") : print("\(table) could not be created.");
-//            notify(message: "\(table) create table prepared");
-            Logger.create(title: "Table created done", info: "\(table) create table prepared");
+            let isDone: Bool = sqlite3_step(createTableStatement) == SQLITE_DONE;
+            if isDone {
+                Logger.create(title: "Table created", info: "\(table) CREATE table prepared");
+            } else {
+                Logger.create(title: "Table not created", info: "\(table) CREATE table could not be prepared");
+            }
         } else {
-            print("CREATE TABLE statement for \(table) could not be prepared.");
-            notify(message: "\(table) create table could not be prepared");
+            Logger.create(title: "CREATE Table error", info: "CREATE TABLE statement for \(table) could not be prepared.");
         }
         
         sqlite3_finalize(createTableStatement);
-    }
-    
-    private func createLogTable() -> Void {
-        let createLogQuery = "CREATE TABLE IF NOT EXISTS logs(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, information TEXT, date TEXT)";
-        
-        do {
-            try self.createTable(createQuery: createLogQuery, table: .logs);
-        } catch let error {
-            print(error.localizedDescription);
-        }
     }
     
     private func createTransactionsTable() {
@@ -127,7 +116,6 @@ class Database {
         do {
             try self.createTable(createQuery: createTableString, table: .categories);
         } catch let error {
-            print(error.localizedDescription);
             Logger.create(title: "Error at create category table", info: error.localizedDescription);
         }
     }

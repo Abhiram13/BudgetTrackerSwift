@@ -84,7 +84,7 @@ class LogView: UIView {
         widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: 0.9).isActive = true;
         leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 20).isActive = true;
         layer.cornerRadius = 10;
-        heightAnchor.constraint(equalToConstant: 100).isActive = true;
+//        heightAnchor.constraint(equalToConstant: 100).isActive = true;
         
         date.translatesAutoresizingMaskIntoConstraints = false;
         date.text = self.dateValue;
@@ -106,6 +106,7 @@ class LogView: UIView {
         info.text = self.infoValue;
         info.leadingAnchor.constraint(equalTo: title.leadingAnchor).isActive = true;
         info.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 5).isActive = true;
+        info.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true;
         info.widthAnchor.constraint(equalTo: title.widthAnchor).isActive = true;
         info.numberOfLines = 0;
         info.font = .systemFont(ofSize: 16, weight: .regular)
