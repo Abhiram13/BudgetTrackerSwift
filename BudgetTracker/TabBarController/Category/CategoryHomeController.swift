@@ -23,7 +23,7 @@ class CategoryHomeController: UIViewController {
         self.view.backgroundColor = .green;
         
         view.addSubview(scroller);
-        view.addSubview(label);                
+        view.addSubview(label);
         
         scroller.addSubview(stackView);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
@@ -49,14 +49,20 @@ class CategoryHomeController: UIViewController {
         refresh.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresh.addTarget(self, action: #selector(refreshed), for: .valueChanged)
         scroller.refreshControl = refresh;
+        
+        self.fetchListOfCategories {};
     }
     
     @objc private func refreshed() {
+        self.fetchListOfCategories {
+            self.refresh.endRefreshing();
+        }
+    }
+    
+    private func fetchListOfCategories(refreshCategories: @escaping () -> Void) -> Void {
         categories = Categories.list();
         
         self.removeCategoriesFromStack();
-        
-        print("Categories: \(categories)");
         
         for category in categories {
             stackView.addArrangedSubview(CategoryView(
@@ -67,7 +73,7 @@ class CategoryHomeController: UIViewController {
             ));
         }
         
-        refresh.endRefreshing();
+        refreshCategories();
     }
     
     private func removeCategoriesFromStack() -> Void {
