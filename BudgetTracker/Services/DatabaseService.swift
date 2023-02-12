@@ -9,8 +9,8 @@ class Database {
         self.dbPath = "transactions.sqlite";
         self.db = OpenDatabase();
         //self.createBankTable();
-//        self.createCategoryTable();
-        //self.dropTable(type: "Categories");
+        self.createCategoryTable();
+//        self.dropTable(type: "Categories");
         //self.createTransactionsTable();
     }
     

@@ -17,3 +17,9 @@ extension String: Error {};
 enum MyError: Error {
     case runtimeError(String)
 }
+
+enum StatusCode: Int {
+    case Ok = 200;
+    case NotPerformed = 300;
+    case BadRequest = 400;
+}

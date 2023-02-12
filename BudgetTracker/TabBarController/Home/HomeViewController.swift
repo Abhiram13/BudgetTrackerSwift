@@ -10,7 +10,7 @@ class HomeViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let _ = Database();
+//        let _ = Database();
     }
     
     @objc private func notify(_ notification: Notification) {

@@ -1,15 +1,29 @@
 import UIKit;
 
+extension String {
+    func decode() -> String {
+        let data = self.data(using: .utf8)!
+        return String(data: data, encoding: .nonLossyASCII) ?? self
+    }
+    
+    func encode() -> String {
+        let data = self.data(using: .nonLossyASCII, allowLossyConversion: true)!
+        return String(data: data, encoding: .utf8)!
+    }
+}
+
 class CategoryHomeController: UIViewController {
     let scroller = UIScrollView();
     let stackView = UIStackView();
     let label = UILabel();
+    var categories: [CategoryWithId] = [];
+    let refresh = UIRefreshControl();
     
     override func viewDidLoad() {
         self.view.backgroundColor = .green;
         
         view.addSubview(scroller);
-        view.addSubview(label);
+        view.addSubview(label);                
         
         scroller.addSubview(stackView);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
@@ -32,8 +46,33 @@ class CategoryHomeController: UIViewController {
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addCategory)));
         label.isUserInteractionEnabled = true;
         
-        for _ in 0..<5 {
-            stackView.addArrangedSubview(CategoryView());
+        refresh.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresh.addTarget(self, action: #selector(refreshed), for: .valueChanged)
+        scroller.refreshControl = refresh;
+    }
+    
+    @objc private func refreshed() {
+        categories = Categories.list();
+        
+        self.removeCategoriesFromStack();
+        
+        print("Categories: \(categories)");
+        
+        for category in categories {
+            stackView.addArrangedSubview(CategoryView(
+                name: category.name,
+                color: category.color,
+                emoji: category.icon,
+                description: category.description
+            ));
+        }
+        
+        refresh.endRefreshing();
+    }
+    
+    private func removeCategoriesFromStack() -> Void {
+        stackView.subviews.forEach { categoryView in
+            categoryView.removeFromSuperview();
         }
     }
     
@@ -44,6 +83,27 @@ class CategoryHomeController: UIViewController {
 }
 
 class CategoryView: UIView {
+    var name: String = "";
+    var color: String = "";
+    var emoji: String = "";
+    var info: String = "";
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame);
+    }
+    
+    required init(coder: NSCoder) {
+        super.init(coder: coder)!;
+    }
+    
+    init(name: String, color: String, emoji: String, description: String) {
+        super.init(frame: .zero);
+        self.info = description;
+        self.color = color;
+        self.name = name;
+        self.emoji = emoji;
+    }
+    
     override func didMoveToSuperview() {
         self.superview != nil ? self.initalise() : nil;
     }
@@ -62,7 +122,6 @@ class CategoryView: UIView {
         leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 20).isActive = true;
         heightAnchor.constraint(equalToConstant: 60).isActive = true;
         layer.cornerRadius = 10;
-//        backgroundColor = .cyan;
         
         circle.translatesAutoresizingMaskIntoConstraints = false;
         circle.widthAnchor.constraint(equalToConstant: 50).isActive = true;
@@ -70,17 +129,18 @@ class CategoryView: UIView {
         circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 7).isActive = true;
         circle.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true;
         circle.addSubview(icon);
-        circle.backgroundColor = .red;
+        circle.backgroundColor = UIColor(hex: self.color);
         circle.layer.cornerRadius = 25
         
-        icon.text = "😎";
+//        icon.text = "😎";
+        icon.text = self.emoji.decode();
         icon.translatesAutoresizingMaskIntoConstraints = false;
         icon.centerYAnchor.constraint(equalTo: circle.centerYAnchor).isActive = true;
         icon.centerXAnchor.constraint(equalTo: circle.centerXAnchor).isActive = true;
         icon.font = UIFont.systemFont(ofSize: 30);
         
         label.translatesAutoresizingMaskIntoConstraints = false;
-        label.text = "Sample category";
+        label.text = self.name;
         label.leadingAnchor.constraint(equalTo: circle.trailingAnchor, constant: 20).isActive = true;
         label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true;
         label.font = .systemFont(ofSize: 20, weight: .medium);

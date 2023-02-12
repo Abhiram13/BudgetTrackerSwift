@@ -16,7 +16,7 @@ class LogController: UIViewController {
         scroller.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
         scroller.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true;
         scroller.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true;
-        scroller.contentSize = CGSize(width: view.frame.width, height: 2000);
+        scroller.contentSize = CGSize(width: view.frame.width, height: 5000);
         
         stackView.axis = .vertical;
         stackView.alignment = .fill;
