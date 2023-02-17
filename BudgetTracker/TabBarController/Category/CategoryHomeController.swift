@@ -20,8 +20,6 @@ class CategoryHomeController: UIViewController {
     let refresh = UIRefreshControl();
     
     override func viewDidLoad() {
-        self.view.backgroundColor = .green;
-        
         view.addSubview(scroller);
         view.addSubview(label);
         

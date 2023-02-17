@@ -8,8 +8,7 @@ class TabBarController: UITabBarController {
         let homeNC = UINavigationController(rootViewController: HomeViewController());
         let categoryNC = UINavigationController(rootViewController: CategoryHomeController());
         let logVC = LogController();
-        
-        // set title for view controllers
+                
         homeNC.title = "Home";
         categoryNC.title = "Categories";
         logVC.title = "Logs";
@@ -20,7 +19,6 @@ class TabBarController: UITabBarController {
         self.tabBar.layer.shadowOffset = CGSize(width: 0, height: -1)
         self.tabBar.layer.shadowRadius = 5
         
-//        self.setViewControllers([homeNC, categoryNC], animated: false);
         self.setViewControllers([categoryNC, homeNC, logVC], animated: false);
     }
 }

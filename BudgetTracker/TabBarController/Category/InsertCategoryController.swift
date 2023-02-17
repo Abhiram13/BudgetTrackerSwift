@@ -1,41 +1,10 @@
 import UIKit;
 
-extension UIColor {
-    func toHexString() -> String {
-        var r:CGFloat = 0
-        var g:CGFloat = 0
-        var b:CGFloat = 0
-        var a:CGFloat = 0
-        
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-        let rgba: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0 ;
-        return String(format:"#%06x", rgba)
-    }
-    
-    convenience init(hex: String, alpha: CGFloat = 1.0) {
-        let hexString: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        let scanner = Scanner(string: hexString)
-        if (hexString.hasPrefix("#")) {
-            scanner.scanLocation = 1
-        }
-        var color: UInt32 = 0
-        scanner.scanHexInt32(&color)
-        let mask = 0x000000FF
-        let r = Int(color >> 16) & mask
-        let g = Int(color >> 8) & mask
-        let b = Int(color) & mask
-        let red   = CGFloat(r) / 255.0
-        let green = CGFloat(g) / 255.0
-        let blue  = CGFloat(b) / 255.0
-        self.init(red:red, green:green, blue:blue, alpha:alpha)
-    }
-}
-
 class CategoryAddController: UIViewController {
     let circle = UIView();
     let textField = UITextField();
     let emojiField = UITextField();
-    let descriptionField = UITextField();
+    let descriptionField = UITextView();
     let button = UIButton();
     let colorPicker: UIColorWell =  {
         let picker = UIColorWell();
@@ -47,43 +16,49 @@ class CategoryAddController: UIViewController {
     }();
     
     override func viewDidLoad() {
-        view.backgroundColor = .white;
+        view.backgroundColor = .SystemBasedBg;
         view.addSubview(colorPicker);
-        view.addSubview(textField);
         view.addSubview(emojiField);
+        view.addSubview(textField);
         view.addSubview(descriptionField);
-        view.addSubview(button);                
+        view.addSubview(button);
         
         colorPicker.translatesAutoresizingMaskIntoConstraints = false;
         colorPicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true;
         colorPicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true;
-        colorPicker.widthAnchor.constraint(equalToConstant: 100).isActive = true;
-        colorPicker.heightAnchor.constraint(equalToConstant: 100).isActive = true;
         colorPicker.backgroundColor = .green;
         colorPicker.layer.cornerRadius = 50;
         colorPicker.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         colorPicker.addTarget(self, action: #selector(colorChanged), for: .valueChanged)
         
-        textField.translatesAutoresizingMaskIntoConstraints = false;
-        textField.topAnchor.constraint(equalTo: colorPicker.bottomAnchor, constant: 20).isActive = true;
-        textField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true;
-        textField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
-        textField.heightAnchor.constraint(equalToConstant: 30).isActive = true;
-        textField.placeholder = "Category name";
-        
         emojiField.translatesAutoresizingMaskIntoConstraints = false;
-        emojiField.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20).isActive = true;
-        emojiField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4).isActive = true;
-        emojiField.heightAnchor.constraint(equalToConstant: 30).isActive = true;
+        emojiField.topAnchor.constraint(equalTo: colorPicker.bottomAnchor, constant: 20).isActive = true;
+        emojiField.widthAnchor.constraint(equalToConstant: 50).isActive = true;
+        emojiField.heightAnchor.constraint(equalToConstant: 50).isActive = true;
         emojiField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
+        emojiField.layer.cornerRadius = 25;
+        emojiField.backgroundColor = .green;
+        emojiField.textAlignment = .center;
         emojiField.placeholder = "🏠";
         
+        textField.translatesAutoresizingMaskIntoConstraints = false;
+        textField.topAnchor.constraint(equalTo: emojiField.bottomAnchor, constant: 20).isActive = true;
+        textField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true;
+        textField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
+        textField.heightAnchor.constraint(equalToConstant: 55).isActive = true;
+        textField.attributedPlaceholder = NSAttributedString(string: "Category name", attributes: [.font: UIFont.boldSystemFont(ofSize: 33.0)]);
+        textField.font = .systemFont(ofSize: 33, weight: .semibold)
+        
         descriptionField.translatesAutoresizingMaskIntoConstraints = false;
-        descriptionField.topAnchor.constraint(equalTo: emojiField.bottomAnchor, constant: 20).isActive = true;
+        descriptionField.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20).isActive = true;
         descriptionField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true;
         descriptionField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
         descriptionField.heightAnchor.constraint(equalToConstant: 100).isActive = true;
-        descriptionField.placeholder = "Category description";
+//        descriptionField.placeholder = "Category description";
+        descriptionField.isScrollEnabled = false;
+        descriptionField.textContainer.lineBreakMode = .byWordWrapping
+        descriptionField.backgroundColor = .none;
+        descriptionField.font = UIFont.systemFont(ofSize: 22)
         
         button.translatesAutoresizingMaskIntoConstraints = false;
         button.topAnchor.constraint(equalTo: descriptionField.bottomAnchor, constant: 20).isActive = true;

@@ -1,14 +1,22 @@
 import UIKit;
 
+
+
+extension UIViewController {
+    static func systemMode() -> UIUserInterfaceStyle {
+        return UITraitCollection.current.userInterfaceStyle;
+    }
+}
+
 class LogController: UIViewController {
     let scroller = UIScrollView();
     let stackView = UIStackView();
     let logs: [LoggerType] = [];
     let noLogsLabel = UILabel();
+    let mode = systemMode();
     
     override func viewDidLoad() {
-        self.view.backgroundColor = .white;
-        
+        view.backgroundColor = .SystemBasedBg;
         view.addSubview(scroller);
         
         scroller.addSubview(stackView);
