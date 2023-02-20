@@ -1,5 +1,5 @@
 import UIKit
 
-let SystemMode: UIUserInterfaceStyle = {
+func SystemColor() -> UIUserInterfaceStyle {
     return UITraitCollection.current.userInterfaceStyle;
-}();
+}

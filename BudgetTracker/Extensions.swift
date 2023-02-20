@@ -2,7 +2,7 @@ import UIKit
 
 extension UIColor {
     static var SystemBasedBg: UIColor {
-        if UITraitCollection.current.userInterfaceStyle == .dark {
+        if SystemColor() == .dark {
             return UIColor(red: 36/255, green: 36/255, blue: 36/255, alpha: 1);
         } else {
             return UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1);
@@ -10,7 +10,7 @@ extension UIColor {
     }
     
     static var SystemBasedText: UIColor {
-        return UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black;
+        return SystemColor() == .dark ? .white : .black;
     }
     
     func toHexString() -> String {

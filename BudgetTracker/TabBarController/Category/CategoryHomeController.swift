@@ -6,17 +6,23 @@ class CategoryHomeController: UIViewController {
     let label = UILabel();
     var categories: [CategoryWithId] = [];
     let refresh = UIRefreshControl();
+    let button = AddButton();
+    let noCategoriesLabel = UILabel();
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection);
-        print("Is Dark: \(UITraitCollection.current.userInterfaceStyle == .dark)");
+        print("Is Dark: \(SystemColor() == .dark)");
         
         view.backgroundColor = .SystemBasedBg;
+        noCategoriesLabel.textColor = .SystemBasedText
     }
     
     override func viewDidLoad() {
         view.addSubview(scroller);
         view.addSubview(label);
+        view.addSubview(button);
+        
+        view.backgroundColor = .SystemBasedBg;
         
         scroller.addSubview(stackView);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
@@ -24,6 +30,14 @@ class CategoryHomeController: UIViewController {
         scroller.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true;
         scroller.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true;
         scroller.contentSize = CGSize(width: view.frame.width, height: 2000);
+        scroller.addSubview(noCategoriesLabel);
+        
+        noCategoriesLabel.translatesAutoresizingMaskIntoConstraints = false;
+        noCategoriesLabel.centerXAnchor.constraint(equalTo: scroller.centerXAnchor).isActive = true;
+        noCategoriesLabel.centerYAnchor.constraint(equalTo: scroller.centerYAnchor).isActive = true;
+        noCategoriesLabel.font = .systemFont(ofSize: 35, weight: .medium);
+        noCategoriesLabel.text = "No Categories";
+        noCategoriesLabel.textColor = .SystemBasedText;
         
         stackView.axis = .vertical;
         stackView.alignment = .fill;
@@ -32,12 +46,9 @@ class CategoryHomeController: UIViewController {
         stackView.topAnchor.constraint(equalTo: scroller.topAnchor).isActive = true;
         stackView.widthAnchor.constraint(equalTo: scroller.widthAnchor).isActive = true;
         
-        label.translatesAutoresizingMaskIntoConstraints = false;
-        label.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true;
-        label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true;
-        label.text = "Add Category";
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addCategory)));
-        label.isUserInteractionEnabled = true;
+        button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true;
+        button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true;
+        button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addCategory)));
         
         refresh.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresh.addTarget(self, action: #selector(refreshed), for: .valueChanged)
@@ -144,4 +155,25 @@ class CategoryView: UIView {
         label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true;
         label.font = .systemFont(ofSize: 20, weight: .medium);
     }
+}
+
+func AddButton() -> UIButton {
+    let button = UIButton();
+    let label = UILabel();
+    
+    button.addSubview(label);
+    button.translatesAutoresizingMaskIntoConstraints = false;
+    button.widthAnchor.constraint(equalToConstant: 70).isActive = true;
+    button.heightAnchor.constraint(equalToConstant: 70).isActive = true;
+    button.backgroundColor = .red;
+    button.layer.cornerRadius = 35
+    
+    label.translatesAutoresizingMaskIntoConstraints = false;
+    label.text = "+";
+    label.textColor = .white;
+    label.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true;
+    label.centerYAnchor.constraint(equalTo: button.centerYAnchor, constant: -2).isActive = true;
+    label.font = .systemFont(ofSize: 40, weight: .medium);
+    
+    return button;
 }
