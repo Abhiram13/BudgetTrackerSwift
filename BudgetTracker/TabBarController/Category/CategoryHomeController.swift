@@ -142,7 +142,6 @@ class CategoryView: UIView {
         circle.backgroundColor = UIColor(hex: self.color);
         circle.layer.cornerRadius = 25
         
-//        icon.text = "😎";
         icon.text = self.emoji.decode();
         icon.translatesAutoresizingMaskIntoConstraints = false;
         icon.centerYAnchor.constraint(equalTo: circle.centerYAnchor).isActive = true;

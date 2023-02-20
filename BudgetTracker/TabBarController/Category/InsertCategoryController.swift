@@ -33,11 +33,11 @@ class CategoryAddController: UIViewController {
         
         emojiField.translatesAutoresizingMaskIntoConstraints = false;
         emojiField.topAnchor.constraint(equalTo: colorPicker.bottomAnchor, constant: 20).isActive = true;
-        emojiField.widthAnchor.constraint(equalToConstant: 50).isActive = true;
-        emojiField.heightAnchor.constraint(equalToConstant: 50).isActive = true;
+        emojiField.widthAnchor.constraint(equalToConstant: 70).isActive = true;
+        emojiField.heightAnchor.constraint(equalToConstant: 70).isActive = true;
         emojiField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
-        emojiField.layer.cornerRadius = 25;
-        emojiField.backgroundColor = .green;
+        emojiField.layer.cornerRadius = 35;
+        emojiField.backgroundColor = colorPicker.selectedColor;
         emojiField.textAlignment = .center;
         emojiField.placeholder = "🏠";
         
@@ -48,13 +48,13 @@ class CategoryAddController: UIViewController {
         textField.heightAnchor.constraint(equalToConstant: 55).isActive = true;
         textField.attributedPlaceholder = NSAttributedString(string: "Category name", attributes: [.font: UIFont.boldSystemFont(ofSize: 33.0)]);
         textField.font = .systemFont(ofSize: 33, weight: .semibold)
+        textField.textAlignment = .center;
         
         descriptionField.translatesAutoresizingMaskIntoConstraints = false;
         descriptionField.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20).isActive = true;
         descriptionField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true;
         descriptionField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
         descriptionField.heightAnchor.constraint(equalToConstant: 100).isActive = true;
-//        descriptionField.placeholder = "Category description";
         descriptionField.isScrollEnabled = false;
         descriptionField.textContainer.lineBreakMode = .byWordWrapping
         descriptionField.backgroundColor = .none;
@@ -62,17 +62,19 @@ class CategoryAddController: UIViewController {
         
         button.translatesAutoresizingMaskIntoConstraints = false;
         button.topAnchor.constraint(equalTo: descriptionField.bottomAnchor, constant: 20).isActive = true;
-        button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true;
+        button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4).isActive = true;
         button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true;
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true;
         button.setTitle("Submit", for: .normal)
         button.backgroundColor = .systemBlue;
         button.titleLabel?.textColor = .white;
+        button.layer.cornerRadius = 10;
         button.addTarget(self, action: #selector(submit), for: .touchUpInside);
     }
     
     @objc private func colorChanged() {
         colorPicker.backgroundColor = colorPicker.selectedColor;
+        emojiField.backgroundColor = colorPicker.selectedColor;
         print("Selected color is: \(colorPicker.selectedColor!)");
     }
     
