@@ -6,6 +6,12 @@ class CategoryAddController: UIViewController {
     let emojiField = UITextField();
     let descriptionField = UITextView();
     let button = UIButton();
+    
+    var pickerColor: UIColor;
+    var categoryName: String;
+    var categoryDescription: String;
+    var emoji: String;
+    
     let colorPicker: UIColorWell =  {
         let picker = UIColorWell();
         picker.title = "Pick a color for Category";
@@ -14,6 +20,22 @@ class CategoryAddController: UIViewController {
         
         return picker;
     }();
+    
+    required init?(coder: NSCoder) {
+        self.pickerColor = .cyan;
+        self.categoryName = "";
+        self.categoryDescription = "";
+        self.emoji = "😝";
+        super.init(coder: coder);
+    }
+    
+    init() {
+        self.pickerColor = .cyan;
+        self.categoryName = "";
+        self.categoryDescription = "";
+        self.emoji = "😝";
+        super.init(nibName: nil, bundle: nil);
+    }
     
     override func viewDidLoad() {
         view.backgroundColor = .SystemBasedBg;
@@ -26,10 +48,10 @@ class CategoryAddController: UIViewController {
         colorPicker.translatesAutoresizingMaskIntoConstraints = false;
         colorPicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true;
         colorPicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true;
-        colorPicker.backgroundColor = .green;
         colorPicker.layer.cornerRadius = 50;
         colorPicker.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        colorPicker.addTarget(self, action: #selector(colorChanged), for: .valueChanged)
+        colorPicker.addTarget(self, action: #selector(colorChanged), for: .valueChanged);
+        colorPicker.selectedColor = self.pickerColor;
         
         emojiField.translatesAutoresizingMaskIntoConstraints = false;
         emojiField.topAnchor.constraint(equalTo: colorPicker.bottomAnchor, constant: 20).isActive = true;
@@ -39,7 +61,7 @@ class CategoryAddController: UIViewController {
         emojiField.layer.cornerRadius = 35;
         emojiField.backgroundColor = colorPicker.selectedColor;
         emojiField.textAlignment = .center;
-        emojiField.placeholder = "🏠";
+        emojiField.text = self.emoji;
         
         textField.translatesAutoresizingMaskIntoConstraints = false;
         textField.topAnchor.constraint(equalTo: emojiField.bottomAnchor, constant: 20).isActive = true;
@@ -49,6 +71,7 @@ class CategoryAddController: UIViewController {
         textField.attributedPlaceholder = NSAttributedString(string: "Category name", attributes: [.font: UIFont.boldSystemFont(ofSize: 33.0)]);
         textField.font = .systemFont(ofSize: 33, weight: .semibold)
         textField.textAlignment = .center;
+        textField.text = self.categoryName;
         
         descriptionField.translatesAutoresizingMaskIntoConstraints = false;
         descriptionField.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20).isActive = true;
@@ -58,7 +81,8 @@ class CategoryAddController: UIViewController {
         descriptionField.isScrollEnabled = false;
         descriptionField.textContainer.lineBreakMode = .byWordWrapping
         descriptionField.backgroundColor = .none;
-        descriptionField.font = UIFont.systemFont(ofSize: 22)
+        descriptionField.font = UIFont.systemFont(ofSize: 22);
+        descriptionField.text = self.categoryDescription;
         
         button.translatesAutoresizingMaskIntoConstraints = false;
         button.topAnchor.constraint(equalTo: descriptionField.bottomAnchor, constant: 20).isActive = true;
@@ -92,5 +116,19 @@ class CategoryAddController: UIViewController {
         ));
         
         self.dismiss(animated: true);
+    }
+}
+
+class CategoryEditController: CategoryAddController {
+    required init?(coder: NSCoder) {
+        super.init(coder: coder);
+    }
+    
+    init(name: String, desc: String, emoji: String, color: UIColor) {
+        super.init();
+        self.categoryName = name;
+        self.categoryDescription = desc;
+        self.emoji = emoji;
+        self.pickerColor = color;
     }
 }

@@ -10,7 +10,7 @@ class CategoryHomeController: UIViewController {
     let noCategoriesLabel = UILabel();
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection);        
+        super.traitCollectionDidChange(previousTraitCollection);
         
         view.backgroundColor = .SystemBasedBg;
         noCategoriesLabel.textColor = .SystemBasedText
@@ -96,6 +96,11 @@ class CategoryHomeController: UIViewController {
     @objc private func addCategory() {
         self.modalPresentationStyle = .fullScreen;
         self.present(CategoryAddController(), animated: true, completion: nil);
+    }
+    
+    @objc private func editCategory() {
+        self.modalPresentationStyle = .fullScreen;
+//        self.present(CategEd, animated: <#T##Bool#>)
     }
 }
 
