@@ -10,8 +10,7 @@ class CategoryHomeController: UIViewController {
     let noCategoriesLabel = UILabel();
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection);
-        print("Is Dark: \(SystemColor() == .dark)");
+        super.traitCollectionDidChange(previousTraitCollection);        
         
         view.backgroundColor = .SystemBasedBg;
         noCategoriesLabel.textColor = .SystemBasedText
@@ -57,6 +56,10 @@ class CategoryHomeController: UIViewController {
         self.fetchListOfCategories {};
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.fetchListOfCategories {};
+    }
+    
     @objc private func refreshed() {
         self.fetchListOfCategories {
             self.refresh.endRefreshing();
@@ -67,6 +70,10 @@ class CategoryHomeController: UIViewController {
         categories = Categories.list();
         
         self.removeCategoriesFromStack();
+        
+        if categories.count > 0 {
+            noCategoriesLabel.removeFromSuperview();
+        }
         
         for category in categories {
             stackView.addArrangedSubview(CategoryView(
