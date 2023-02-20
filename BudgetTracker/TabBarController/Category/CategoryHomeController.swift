@@ -1,23 +1,18 @@
 import UIKit;
 
-extension String {
-    func decode() -> String {
-        let data = self.data(using: .utf8)!
-        return String(data: data, encoding: .nonLossyASCII) ?? self
-    }
-    
-    func encode() -> String {
-        let data = self.data(using: .nonLossyASCII, allowLossyConversion: true)!
-        return String(data: data, encoding: .utf8)!
-    }
-}
-
 class CategoryHomeController: UIViewController {
     let scroller = UIScrollView();
     let stackView = UIStackView();
     let label = UILabel();
     var categories: [CategoryWithId] = [];
     let refresh = UIRefreshControl();
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection);
+        print("Is Dark: \(UITraitCollection.current.userInterfaceStyle == .dark)");
+        
+        view.backgroundColor = .SystemBasedBg;
+    }
     
     override func viewDidLoad() {
         view.addSubview(scroller);

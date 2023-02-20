@@ -2,7 +2,7 @@ import UIKit
 
 extension UIColor {
     static var SystemBasedBg: UIColor {
-        if SystemMode == .dark {
+        if UITraitCollection.current.userInterfaceStyle == .dark {
             return UIColor(red: 36/255, green: 36/255, blue: 36/255, alpha: 1);
         } else {
             return UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1);
@@ -10,7 +10,7 @@ extension UIColor {
     }
     
     static var SystemBasedText: UIColor {
-        return SystemMode == .dark ? .black : .white;
+        return UITraitCollection.current.userInterfaceStyle == .dark ? .white : .black;
     }
     
     func toHexString() -> String {
@@ -40,5 +40,17 @@ extension UIColor {
         let green = CGFloat(g) / 255.0
         let blue  = CGFloat(b) / 255.0
         self.init(red:red, green:green, blue:blue, alpha:alpha)
+    }
+}
+
+extension String {
+    func decode() -> String {
+        let data = self.data(using: .utf8)!
+        return String(data: data, encoding: .nonLossyASCII) ?? self
+    }
+    
+    func encode() -> String {
+        let data = self.data(using: .nonLossyASCII, allowLossyConversion: true)!
+        return String(data: data, encoding: .utf8)!
     }
 }
