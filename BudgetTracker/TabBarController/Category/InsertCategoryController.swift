@@ -64,7 +64,7 @@ class CategoryAddController: UIViewController {
         emojiField.layer.cornerRadius = 35;
         emojiField.backgroundColor = colorPicker.selectedColor;
         emojiField.textAlignment = .center;
-        emojiField.text = self.emoji;
+        emojiField.text = self.emoji.decode();
         
         textField.translatesAutoresizingMaskIntoConstraints = false;
         textField.topAnchor.constraint(equalTo: emojiField.bottomAnchor, constant: 20).isActive = true;

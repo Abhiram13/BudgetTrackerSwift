@@ -57,6 +57,7 @@ class CategoryHomeController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("Hello");
         self.fetchListOfCategories {};
     }
     
