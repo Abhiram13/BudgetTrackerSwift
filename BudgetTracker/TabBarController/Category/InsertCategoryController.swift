@@ -11,6 +11,7 @@ class CategoryAddController: UIViewController {
     var categoryName: String;
     var categoryDescription: String;
     var emoji: String;
+    var rowId: String?;
     
     let colorPicker: UIColorWell =  {
         let picker = UIColorWell();
@@ -26,6 +27,7 @@ class CategoryAddController: UIViewController {
         self.categoryName = "";
         self.categoryDescription = "";
         self.emoji = "😝";
+        self.rowId = nil;
         super.init(coder: coder);
     }
     
@@ -34,6 +36,7 @@ class CategoryAddController: UIViewController {
         self.categoryName = "";
         self.categoryDescription = "";
         self.emoji = "😝";
+        self.rowId = nil;
         super.init(nibName: nil, bundle: nil);
     }
     
@@ -108,14 +111,29 @@ class CategoryAddController: UIViewController {
         print("Category icon: \(emojiField.text!.decode())");
         print("Category description: \(descriptionField.text!)");
         
+        rowId == nil ? self.insert() : self.update();
+        
+        self.dismiss(animated: true);
+    }
+    
+    private func insert() {
         let _: StatusCode = Categories.insert(payload: Category(
             name: textField.text!,
             description: descriptionField.text!,
             icon: emojiField.text!.encode(),
             color: colorPicker.selectedColor!.toHexString()
         ));
-        
-        self.dismiss(animated: true);
+    }
+    
+    private func update() {
+        let _: StatusCode = Categories.update(payload: CategoryWithId(
+            id: 0,
+            rowId: rowId!,
+            name: textField.text!,
+            description: descriptionField.text!,
+            icon: emojiField.text!.encode(),
+            color: colorPicker.selectedColor!.toHexString()
+        ));
     }
 }
 
@@ -124,11 +142,12 @@ class CategoryEditController: CategoryAddController {
         super.init(coder: coder);
     }
     
-    init(name: String, desc: String, emoji: String, color: UIColor) {
+    init(name: String, desc: String, emoji: String, color: UIColor, rowId: String) {
         super.init();
         self.categoryName = name;
         self.categoryDescription = desc;
         self.emoji = emoji;
         self.pickerColor = color;
+        self.rowId = rowId;
     }
 }

@@ -76,20 +76,27 @@ class CategoryHomeController: UIViewController {
         }
         
         for category in categories {
-            self.addCatgeoryInStackAndAttachGesture(name: category.name, desc: category.description, emoji: category.icon, color: category.color);
+            self.addCatgeoryInStackAndAttachGesture(
+                name: category.name,
+                desc: category.description,
+                emoji: category.icon,
+                color: category.color,
+                rowId: category.rowId
+            );
         }
         
         refreshCategories();
     }
     
-    private func addCatgeoryInStackAndAttachGesture(name: String, desc: String, emoji: String, color: String) -> Void {
+    private func addCatgeoryInStackAndAttachGesture(name: String, desc: String, emoji: String, color: String, rowId: String) -> Void {
         let gesture = CategoryGesture(target: self, action: #selector(editCategory));
         gesture.catName = name;
         gesture.desc = desc;
         gesture.emoji = emoji;
         gesture.color = color;
+        gesture.rowId = rowId;
         
-        let categoryView = CategoryView(name: name, color: color, emoji: emoji, description: desc, callback: {});
+        let categoryView = CategoryView(name: name, color: color, emoji: emoji, description: desc);
         categoryView.addGestureRecognizer(gesture);
         
         stackView.addArrangedSubview(categoryView);
@@ -112,7 +119,8 @@ class CategoryHomeController: UIViewController {
             name: sender.catName!,
             desc: sender.desc!,
             emoji: sender.emoji!,
-            color: UIColor(hex: sender.color!)
+            color: UIColor(hex: sender.color!),
+            rowId: sender.rowId!
         ), animated: true, completion: nil)
     }
 }
@@ -122,7 +130,6 @@ class CategoryView: UIView {
     var color: String = "";
     var emoji: String = "";
     var info: String = "";
-    var closure: () -> Void = {};
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -132,13 +139,12 @@ class CategoryView: UIView {
         super.init(coder: coder)!;
     }
     
-    init(name: String, color: String, emoji: String, description: String, callback: @escaping () -> Void) {
+    init(name: String, color: String, emoji: String, description: String) {
         super.init(frame: .zero);
         self.info = description;
         self.color = color;
         self.name = name;
         self.emoji = emoji;
-        self.closure = callback;
     }
     
     override func didMoveToSuperview() {
@@ -209,4 +215,5 @@ class CategoryGesture: UITapGestureRecognizer {
     var desc: String?;
     var emoji: String?;
     var color: String?;
+    var rowId: String?;
 }

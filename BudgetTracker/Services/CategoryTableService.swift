@@ -16,20 +16,44 @@ class Categories {
             sqlite3_bind_text(insertStatement, 5, (payload.description as NSString).utf8String, -1, nil)
             
             if sqlite3_step(insertStatement) == SQLITE_DONE {
-                print("Successfully inserted row.")
                 Logger.create(title: "Row insert", info: "Successfully inserted category");
                 sqlite3_finalize(insertStatement);
                 return .Ok;
             } else {
-                print("Could not insert row.")
                 Logger.create(title: "Row insert failed", info: "Cannot able to insert category");
                 sqlite3_finalize(insertStatement);
                 return .NotPerformed;
             }
         } else {
-            print("INSERT statement could not be prepared.")
             Logger.create(title: "Insert statement error", info: "INSERT statement could not be prepared at categories.");
             sqlite3_finalize(insertStatement);
+            return .NotPerformed;
+        }
+    }
+    
+    static func update(payload: CategoryWithId) -> StatusCode {
+        let updateStatementString = """
+            UPDATE categories SET
+            name = '\(payload.name)',
+            icon = '\(payload.icon)',
+            color = '\(payload.color)',
+            description = '\(payload.description)' WHERE rowId = '\(payload.rowId)';
+        """;
+        
+        var updateStatement: OpaquePointer? = nil
+        if sqlite3_prepare_v2(self.db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
+            if sqlite3_step(updateStatement) == SQLITE_DONE {
+                Logger.create(title: "Updated row", info: "Updating categories was successful");
+                sqlite3_finalize(updateStatement);
+                return .Ok;
+            } else {
+                Logger.create(title: "Row update failed", info: "Cannot able to update category");
+                sqlite3_finalize(updateStatement);
+                return .NotPerformed;
+            }
+        } else {
+            Logger.create(title: "Update statement error", info: "UPDATE statement could not be prepared at categories.");
+            sqlite3_finalize(updateStatement);
             return .NotPerformed;
         }
     }
