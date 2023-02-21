@@ -76,15 +76,23 @@ class CategoryHomeController: UIViewController {
         }
         
         for category in categories {
-            stackView.addArrangedSubview(CategoryView(
-                name: category.name,
-                color: category.color,
-                emoji: category.icon,
-                description: category.description
-            ));
+            self.addCatgeoryInStackAndAttachGesture(name: category.name, desc: category.description, emoji: category.icon, color: category.color);
         }
         
         refreshCategories();
+    }
+    
+    private func addCatgeoryInStackAndAttachGesture(name: String, desc: String, emoji: String, color: String) -> Void {
+        let gesture = CategoryGesture(target: self, action: #selector(editCategory));
+        gesture.catName = name;
+        gesture.desc = desc;
+        gesture.emoji = emoji;
+        gesture.color = color;
+        
+        let categoryView = CategoryView(name: name, color: color, emoji: emoji, description: desc, callback: {});
+        categoryView.addGestureRecognizer(gesture);
+        
+        stackView.addArrangedSubview(categoryView);
     }
     
     private func removeCategoriesFromStack() -> Void {
@@ -98,9 +106,14 @@ class CategoryHomeController: UIViewController {
         self.present(CategoryAddController(), animated: true, completion: nil);
     }
     
-    @objc private func editCategory() {
+    @objc private func editCategory(sender: CategoryGesture) {
         self.modalPresentationStyle = .fullScreen;
-//        self.present(CategEd, animated: <#T##Bool#>)
+        self.present(CategoryEditController(
+            name: sender.catName!,
+            desc: sender.desc!,
+            emoji: sender.emoji!,
+            color: UIColor(hex: sender.color!)
+        ), animated: true, completion: nil)
     }
 }
 
@@ -109,6 +122,7 @@ class CategoryView: UIView {
     var color: String = "";
     var emoji: String = "";
     var info: String = "";
+    var closure: () -> Void = {};
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -118,12 +132,13 @@ class CategoryView: UIView {
         super.init(coder: coder)!;
     }
     
-    init(name: String, color: String, emoji: String, description: String) {
+    init(name: String, color: String, emoji: String, description: String, callback: @escaping () -> Void) {
         super.init(frame: .zero);
         self.info = description;
         self.color = color;
         self.name = name;
         self.emoji = emoji;
+        self.closure = callback;
     }
     
     override func didMoveToSuperview() {
@@ -187,4 +202,11 @@ func AddButton() -> UIButton {
     label.font = .systemFont(ofSize: 40, weight: .medium);
     
     return button;
+}
+
+class CategoryGesture: UITapGestureRecognizer {
+    var catName: String?;
+    var desc: String?;
+    var emoji: String?;
+    var color: String?;
 }
