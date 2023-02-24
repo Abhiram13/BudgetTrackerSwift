@@ -1,7 +1,9 @@
 import UIKit
+import SwiftUI;
 
 class HomeViewController: UIViewController {
     let reportView = ReportView();
+    let addButton = AddButton();
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection);
@@ -13,12 +15,22 @@ class HomeViewController: UIViewController {
         super.viewDidLoad();
         
         view.addSubview(reportView);
+        view.addSubview(addButton);
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(notify(_:)), name: Notification.Name("com.bt.alert"), object: nil);
+        addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true;
+        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true;
+        addButton.addTarget(self, action: #selector(navigateToAddView), for: .touchDown)
     }
     
     override func viewDidAppear(_ animated: Bool) {
 //        let _ = Database();
+        self.tabBarController?.tabBar.isHidden = false;
+    }
+    
+    @objc private func navigateToAddView() {
+        let insertTransactionView = UIHostingController(rootView: InsertTransaction());
+        self.navigationController?.pushViewController(insertTransactionView, animated: true);
+        self.tabBarController?.tabBar.isHidden = true;
     }
     
     @objc private func notify(_ notification: Notification) {

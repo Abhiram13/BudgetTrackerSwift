@@ -22,3 +22,8 @@ class CategoryWithId: Category {
         super.init(name: name, description: description, icon: icon, color: color);
     }
 }
+
+struct CategorySelectableList: Decodable, Hashable {
+    let rowId: String;
+    let name: String;
+}

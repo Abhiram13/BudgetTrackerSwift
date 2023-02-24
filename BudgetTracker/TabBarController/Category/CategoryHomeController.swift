@@ -111,10 +111,10 @@ class CategoryHomeController: UIViewController {
     }
     
     @objc private func addCategory() {
-//        self.modalPresentationStyle = .fullScreen;
-//        self.present(CategoryAddController(), animated: true, completion: nil);
-        let insertView = UIHostingController(rootView: InsertCategoryView());
-        self.navigationController?.pushViewController(insertView, animated: true);
+        self.modalPresentationStyle = .fullScreen;
+        self.present(CategoryAddController(), animated: true, completion: nil);
+//        let insertView = UIHostingController(rootView: InsertCategoryView());
+//        self.navigationController?.pushViewController(insertView, animated: true);
         
     }
     
