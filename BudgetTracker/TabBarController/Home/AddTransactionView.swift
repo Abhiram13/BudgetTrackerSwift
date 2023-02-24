@@ -21,9 +21,6 @@ struct InsertTransaction: View {
         TypeOfTransaction(label: .PartialDebit, value: .partialDebit),
         TypeOfTransaction(label: .PartialCredit, value: .partialCredit)
     ];
-//    let categoryHelper: CategoryHelper = CategoryHelper();
-//    let bankHelper: BankHelper = BankHelper();
-//    let transactionHelper: TransactionHelper = TransactionHelper();
     
     var body: some View {
         Form {
@@ -72,24 +69,11 @@ struct InsertTransaction: View {
                 Button("OK", role: .cancel) {}
             }
         }
-//        .toolbar(.hidden, for: .tabBar)
-//        .frame(alignment: .topLeading)
-//        .onAppear(perform: self.LoadData)
+        .onAppear(perform: self.LoadData)
     }
     
     private func LoadData() -> Void {
-//        var bks = bankHelper.read();
-        
-//        bks.map {
-//            bankHelper.update(payload: Bank(id: $0.id, name: $0.name, row_id: $0.row_id == "" ? UUID().uuidString : $0.row_id))
-//        }
-//
-//        cts.map {
-//            categoryHelper.update(payload: Category(id: $0.id, category: $0.category, row_id: $0.row_id == "" ? UUID().uuidString : $0.row_id))
-//        }
-//        bks.insert(Bank(id: 0, name: "None", row_id: ""), at: 0);
-//        self.categories = categoryHelper.read();
-//        self.banks = bks;
+        self.categories = Categories.selectableList();
     }
     
     private func Save() -> Void {

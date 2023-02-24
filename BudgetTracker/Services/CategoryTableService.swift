@@ -106,4 +106,28 @@ class Categories {
         
         sqlite3_finalize(deleteStatement)
     }
+    
+    static func selectableList() -> [CategorySelectableList] {
+        let queryStatementString = "SELECT COALESCE(rowId, ''), COALESCE(name, '') FROM categories;"
+        var queryStatement: OpaquePointer? = nil
+        var categories : [CategorySelectableList] = []
+        
+        if sqlite3_prepare_v2(self.db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+            while sqlite3_step(queryStatement) == SQLITE_ROW {
+                let row_id = String(describing: String(cString: sqlite3_column_text(queryStatement, 0)));
+                let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)));
+                                
+                print("row_id: \(row_id)");
+                print("name: \(name)");
+                
+                categories.append(CategorySelectableList(rowId: row_id, name: name));
+            }
+        } else {
+            print("List statement for category selectable list could not be prepared")
+            Logger.create(title: "List statement Error", info: "List statement for category selectable list could not be prepared");
+        }
+        
+        sqlite3_finalize(queryStatement)
+        return categories;
+    }
 }
