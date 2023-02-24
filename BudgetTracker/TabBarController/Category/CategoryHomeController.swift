@@ -1,4 +1,5 @@
 import UIKit;
+import SwiftUI;
 
 class CategoryHomeController: UIViewController {
     let scroller = UIScrollView();
@@ -110,8 +111,11 @@ class CategoryHomeController: UIViewController {
     }
     
     @objc private func addCategory() {
-        self.modalPresentationStyle = .fullScreen;
-        self.present(CategoryAddController(), animated: true, completion: nil);
+//        self.modalPresentationStyle = .fullScreen;
+//        self.present(CategoryAddController(), animated: true, completion: nil);
+        let insertView = UIHostingController(rootView: InsertCategoryView());
+        self.navigationController?.pushViewController(insertView, animated: true);
+        
     }
     
     @objc private func editCategory(sender: CategoryGesture) {
