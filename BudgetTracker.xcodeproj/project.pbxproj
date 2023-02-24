@@ -29,6 +29,8 @@
 		83ED910229A929A600B89885 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910129A929A600B89885 /* AddTransactionView.swift */; };
 		83ED910429A92A7B00B89885 /* BankTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910329A92A7B00B89885 /* BankTypes.swift */; };
 		83ED910629A92AF700B89885 /* TransactionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910529A92AF700B89885 /* TransactionTypes.swift */; };
+		83ED910929A934C400B89885 /* BankHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910829A934C400B89885 /* BankHomeVC.swift */; };
+		83ED910B29A9366400B89885 /* AddBankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910A29A9366400B89885 /* AddBankViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		83ED910129A929A600B89885 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
 		83ED910329A92A7B00B89885 /* BankTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankTypes.swift; sourceTree = "<group>"; };
 		83ED910529A92AF700B89885 /* TransactionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTypes.swift; sourceTree = "<group>"; };
+		83ED910829A934C400B89885 /* BankHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankHomeVC.swift; sourceTree = "<group>"; };
+		83ED910A29A9366400B89885 /* AddBankViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBankViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,7 @@
 		837BBE742992A29300EDF881 /* TabBarController */ = {
 			isa = PBXGroup;
 			children = (
+				83ED910729A934AC00B89885 /* Bank */,
 				838B7DFF2997898F00A0BC26 /* Logs */,
 				837BBE762992A5D000EDF881 /* Category */,
 				837BBE752992A5BA00EDF881 /* Home */,
@@ -163,6 +168,15 @@
 			path = Logs;
 			sourceTree = "<group>";
 		};
+		83ED910729A934AC00B89885 /* Bank */ = {
+			isa = PBXGroup;
+			children = (
+				83ED910829A934C400B89885 /* BankHomeVC.swift */,
+				83ED910A29A9366400B89885 /* AddBankViewController.swift */,
+			);
+			path = Bank;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -243,6 +257,7 @@
 				83ED910029A926BD00B89885 /* AddCategory.swift in Sources */,
 				833077A32998BC0100C587E4 /* CategoryTypes.swift in Sources */,
 				838747E4298E264800A6757F /* HomeViewController.swift in Sources */,
+				83ED910929A934C400B89885 /* BankHomeVC.swift in Sources */,
 				838B7E01299789A000A0BC26 /* LogController.swift in Sources */,
 				838B7DF729977CBB00A0BC26 /* NotificationService.swift in Sources */,
 				838747E0298E264800A6757F /* AppDelegate.swift in Sources */,
@@ -252,6 +267,7 @@
 				838747F5298E2B3500A6757F /* DatabaseService.swift in Sources */,
 				838B7E052997CE3300A0BC26 /* InsertCategoryController.swift in Sources */,
 				837BBE732992A19E00EDF881 /* TabBarController.swift in Sources */,
+				83ED910B29A9366400B89885 /* AddBankViewController.swift in Sources */,
 				838747E2298E264800A6757F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
