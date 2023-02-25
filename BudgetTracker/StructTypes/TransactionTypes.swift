@@ -17,3 +17,33 @@ enum LabelOfTransactionTypes: String {
     case PartialCredit = "Partial Credit"
     case PartialDebit = "Partial Debit"
 }
+
+class TransactionPayload {
+    let categoryId: String;
+    let fromBankId: String;
+    let toBankId: String;
+    let description: String;
+    let amount: Int;
+    let type: String;
+    let due: Bool;
+    let date: String;
+    
+    init(categoryId: String, fromBankId: String, toBankId: String, description: String, amount: Int, type: String, due: Bool, date: String) {
+        self.categoryId = categoryId
+        self.fromBankId = fromBankId
+        self.toBankId = toBankId
+        self.description = description
+        self.amount = amount
+        self.type = type
+        self.due = due
+        self.date = date
+    }
+}
+
+//class Transaction: TransactionPayload {
+//    let rowId: String;
+//    
+//    override init(categoryId: String, fromBankId: String, toBankId: String, description: String, amount: Int, type: String, due: Bool, date: String) {
+//        
+//    }
+//}

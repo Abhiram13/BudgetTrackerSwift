@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        view.backgroundColor = .SystemBasedBg;
         view.addSubview(reportView);
         view.addSubview(addButton);
         

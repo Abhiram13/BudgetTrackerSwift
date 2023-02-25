@@ -26,6 +26,7 @@
 		838B7E01299789A000A0BC26 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E00299789A000A0BC26 /* LogController.swift */; };
 		838B7E032997AFEB00A0BC26 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E022997AFEB00A0BC26 /* DateService.swift */; };
 		838B7E052997CE3300A0BC26 /* InsertCategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B7E042997CE3300A0BC26 /* InsertCategoryController.swift */; };
+		83B54C9B29A9EA5200938A22 /* TransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B54C9A29A9EA5200938A22 /* TransactionService.swift */; };
 		83ED910229A929A600B89885 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910129A929A600B89885 /* AddTransactionView.swift */; };
 		83ED910429A92A7B00B89885 /* BankTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910329A92A7B00B89885 /* BankTypes.swift */; };
 		83ED910629A92AF700B89885 /* TransactionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED910529A92AF700B89885 /* TransactionTypes.swift */; };
@@ -54,6 +55,7 @@
 		838B7E00299789A000A0BC26 /* LogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		838B7E022997AFEB00A0BC26 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		838B7E042997CE3300A0BC26 /* InsertCategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertCategoryController.swift; sourceTree = "<group>"; };
+		83B54C9A29A9EA5200938A22 /* TransactionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionService.swift; sourceTree = "<group>"; };
 		83ED910129A929A600B89885 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
 		83ED910329A92A7B00B89885 /* BankTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankTypes.swift; sourceTree = "<group>"; };
 		83ED910529A92AF700B89885 /* TransactionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTypes.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				838B7E022997AFEB00A0BC26 /* DateService.swift */,
 				833077A02998BB8700C587E4 /* CategoryTableService.swift */,
 				838B2A0729A9AAB1003B0F58 /* BankServices.swift */,
+				83B54C9A29A9EA5200938A22 /* TransactionService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				838B7E052997CE3300A0BC26 /* InsertCategoryController.swift in Sources */,
 				837BBE732992A19E00EDF881 /* TabBarController.swift in Sources */,
 				838747E2298E264800A6757F /* SceneDelegate.swift in Sources */,
+				83B54C9B29A9EA5200938A22 /* TransactionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
