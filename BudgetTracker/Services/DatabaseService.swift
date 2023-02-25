@@ -8,7 +8,7 @@ class Database {
     init() {
         self.dbPath = "transactions.sqlite";
         self.db = OpenDatabase();
-        //self.createBankTable();
+        self.createBankTable();
         self.createCategoryTable();
 //        self.dropTable(type: "Categories");
         //self.createTransactionsTable();
@@ -135,28 +135,13 @@ class Database {
     }
     
     private func createBankTable() {
-        if self.check(table: .banks) {
-            return;
+        let createTableString = "CREATE TABLE IF NOT EXISTS banks(id INTEGER PRIMARY KEY AUTOINCREMENT, rowId TEXT, name TEXT);"
+        
+        do {
+            try self.createTable(createQuery: createTableString, table: .banks);
+        } catch let error {
+            Logger.create(title: "Error at create bank table", info: error.localizedDescription);
         }
-        
-        let createTableString = """
-            CREATE TABLE IF NOT EXISTS banks(
-                id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT
-            );
-        """
-        var createTableStatement: OpaquePointer? = nil
-        
-        if sqlite3_prepare_v2(self.db, createTableString, -1, &createTableStatement, nil) == SQLITE_OK {
-            if sqlite3_step(createTableStatement) == SQLITE_DONE {
-                print("banks table created.")
-            } else {
-                print("banks table could not be created.")
-            }
-        } else {
-            print("CREATE TABLE banks statement could not be prepared.")
-        }
-        
-        sqlite3_finalize(createTableStatement)
     }
     
     private func check(table: Table) -> Bool {
