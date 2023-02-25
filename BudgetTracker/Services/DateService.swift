@@ -13,4 +13,22 @@ enum DateFormats: String {
     
     /// Example: Feb 11, 2023
     case onlyDate = "MMM d, yyyy";
+    
+    /// Example: 2023-02-27 05:59:00 +0000
+    case longDateWithTime = "yyyy-MM-dd HH:mm:ss"
+}
+
+public class DateController {
+    private static let dateFormatter = DateFormatter();
+    
+    static func convertToDate(date: String, to format: DateFormats = .longDateWithTime) -> Date {
+        dateFormatter.dateFormat = format.rawValue;
+        let date = dateFormatter.date(from: date);
+        return date!;
+    }
+    
+    static func convertToString(date: Date, to format: DateFormats = .longDateWithTime) -> String {
+        dateFormatter.dateFormat = format.rawValue;
+        return dateFormatter.string(from: date);
+    }
 }

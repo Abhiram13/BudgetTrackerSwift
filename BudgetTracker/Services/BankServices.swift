@@ -39,18 +39,35 @@ class BankServices {
                 let row_id = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)));
                 let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 2)));
                 
-                print("id: \(id)");
-                print("row_id: \(row_id)");
-                print("name: \(name)");
-                
                 banks.append(BankWithId(id: Int(id), rowId: row_id, name: name));
             }
         } else {
-            print("SELECT statement could not be prepared")
-            Logger.create(title: "SELECT statement error", info: "SELECT statement could not be prepared at categories.");
+            Logger.create(title: "SELECT statement error", info: "SELECT statement could not be prepared at bank list.");
         }
         
         sqlite3_finalize(queryStatement)
         return banks;
+    }
+    
+    static func listWithId() -> [BankSelectableList] {
+        let queryStatementString = "SELECT COALESCE(rowId, ''), COALESCE(name, '') FROM banks;"
+        var queryStatement: OpaquePointer? = nil
+        var banks: [BankSelectableList] = []
+        let emptyBank = BankSelectableList(rowId: "", name: "None");
+        
+        if sqlite3_prepare_v2(self.db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+            while sqlite3_step(queryStatement) == SQLITE_ROW {
+                let row_id = String(describing: String(cString: sqlite3_column_text(queryStatement, 0)));
+                let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)));
+                
+                banks.append(BankSelectableList(rowId: row_id, name: name));
+            }
+        } else {
+            Logger.create(title: "SELECT statement error", info: "SELECT statement could not be prepared at bank list with id.");
+        }
+        
+        sqlite3_finalize(queryStatement)
+        banks.insert(emptyBank, at: 0);
+        return banks.count > 0 ? banks : [emptyBank];
     }
 }

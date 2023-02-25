@@ -5,6 +5,7 @@ class BankViewController: UIViewController {
     let scroller = UIScrollView();
     let stackView = UIStackView();
     var banks: [BankWithId] = [];
+    let noBanksLabel = UILabel();
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection);
@@ -19,6 +20,7 @@ class BankViewController: UIViewController {
         view.addSubview(addButton);
         
         scroller.addSubview(stackView);
+        scroller.addSubview(noBanksLabel);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
         scroller.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
         scroller.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true;
@@ -32,6 +34,13 @@ class BankViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         stackView.topAnchor.constraint(equalTo: scroller.topAnchor).isActive = true;
         stackView.widthAnchor.constraint(equalTo: scroller.widthAnchor).isActive = true;
+        
+        noBanksLabel.translatesAutoresizingMaskIntoConstraints = false;
+        noBanksLabel.centerXAnchor.constraint(equalTo: scroller.centerXAnchor).isActive = true;
+        noBanksLabel.centerYAnchor.constraint(equalTo: scroller.centerYAnchor).isActive = true;
+        noBanksLabel.font = .systemFont(ofSize: 30, weight: .medium);
+        noBanksLabel.text = "No Banks added";
+        noBanksLabel.textColor = .SystemBasedText;
         
         addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true;
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true;
@@ -47,10 +56,22 @@ class BankViewController: UIViewController {
     private func fetchListOfBanks() -> Void {
         banks = BankServices.list();
         
+        self.removeBankLabelsFromStack()
+        
+        if banks.count > 0 {
+            noBanksLabel.removeFromSuperview();
+        }
+        
         for bank in banks {
             let name = bank.name;
             let label = BankLabel(bank: name);
             stackView.addArrangedSubview(label);
+        }
+    }
+    
+    private func removeBankLabelsFromStack() -> Void {
+        stackView.subviews.forEach { bankLabels in
+            bankLabels.removeFromSuperview();
         }
     }
     
@@ -93,8 +114,10 @@ class BankLabel: UILabel {
     }
     
     override func didMoveToSuperview() {
-        let parent: UIView = self.superview!;
-        self.initalize(parent: parent);
+        if self.superview != nil {
+            let parent: UIView = self.superview!;
+            self.initalize(parent: parent);
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

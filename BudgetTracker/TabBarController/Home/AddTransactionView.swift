@@ -39,17 +39,17 @@ struct InsertTransaction: View {
             
             Section {
                 Picker("Category", selection: $selectedCategory) {
-                    ForEach(self.categories, id: \.name) { c in Text(c.name).tag(c as CategorySelectableList) }
+                    ForEach(self.categories, id: \.rowId) { c in Text(c.name).tag(c as CategorySelectableList) }
                 }
                 .onChange(of: selectedCategory) { cat in print("This is selected category: \(cat)") }
                 
                 Picker("From Bank", selection: $selectedBank) {
-                    ForEach(self.banks, id: \.name) { b in Text(b.name).tag(b as BankSelectableList) }
+                    ForEach(self.banks, id: \.rowId) { b in Text(b.name).tag(b as BankSelectableList) }
                 }
                 .onChange(of: selectedBank) { bank in print("This is selected bank: \(bank)") }
                 
                 Picker("To Bank", selection: $selectedToBank) {
-                    ForEach(self.banks, id: \.name) { bk in Text(bk.name).tag(bk as BankSelectableList) }
+                    ForEach(self.banks, id: \.rowId) { bk in Text(bk.name).tag(bk as BankSelectableList) }
                 }
                 .onChange(of: selectedToBank) { bnk in print(bnk) }
             }
@@ -73,17 +73,30 @@ struct InsertTransaction: View {
     }
     
     private func LoadData() -> Void {
-        self.categories = Categories.selectableList();
+        let listOfCategories: [CategorySelectableList] = Categories.selectableList();
+        let listOfBanks: [BankSelectableList] = BankServices.listWithId();
+        
+        self.categories = listOfCategories;
+        self.banks = listOfBanks;
+        self.selectedCategory = listOfCategories[0];
+        self.selectedBank = listOfBanks[0];
+        self.selectedToBank = listOfBanks[0];
+        
+        print("Categories: \(self.categories)")
+        print("Bank: \(self.banks)")
     }
     
     private func Save() -> Void {
-//        let formatter = DateFormatter();
-//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss";
 //        let isDetailsProvided: Bool =  self.AlertMessage()
 //
-//        print("catgs_id: \(self.selectedCategory)")
-//        print("bank_id: \(self.selectedBank)")
-//        print("bank_id_to: \(self.selectedToBank)")
+        print("Category: \(self.selectedCategory.name)")
+        print("From bank: \(self.selectedBank.name)")
+        print("To Bank: \(self.selectedToBank.name)")
+        print("Amount: \(amount)")
+        print("Description: \(description)")
+        print("Type: \(type.value)")
+        print("Date: \(DateController.convertToString(date: selectedDate))");
+        print("Due: \(isDue)");
 //
 //        if isDetailsProvided {
 //            let isSuccess: Bool = transactionHelper.insert(payload: Transaction(

@@ -10,7 +10,7 @@ class Database {
         self.db = OpenDatabase();
         self.createBankTable();
         self.createCategoryTable();
-//        self.dropTable(type: "Categories");
+//        self.dropTable(type: .banks);
         //self.createTransactionsTable();
     }
     
@@ -120,15 +120,15 @@ class Database {
         }
     }
     
-    private func dropTable(type: String) {
-        let deletQuery = "DROP TABLE IF EXISTS categories";
+    private func dropTable(type: Table) {
+        let deletQuery = "DROP TABLE IF EXISTS \(type)";
         var createTableStatement: OpaquePointer? = nil;
         
         if sqlite3_prepare_v2(self.db, deletQuery, -1, &createTableStatement, nil) == SQLITE_OK {
             let isDone: Bool = sqlite3_step(createTableStatement) == SQLITE_DONE;
-            isDone ? print("table deleted.") : print("table could not be deleted.");
+            isDone ? print("\(type) table deleted.") : print("\(type) table could not be deleted.");
         } else {
-            print("DROP TABLE statement could not be prepared.");
+            print("DROP TABLE \(type) statement could not be prepared.");
         }
         
         sqlite3_finalize(createTableStatement);
