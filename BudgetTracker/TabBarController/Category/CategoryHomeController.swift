@@ -27,6 +27,8 @@ class CategoryHomeController: UIViewController {
                 
         view.backgroundColor = .SystemBasedBg;
         
+        NotificationCenter.default.addObserver(self, selector: #selector(notifyColor), name: Notification.Name("color.update"), object: nil);
+        
         scroller.addSubview(stackView);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
         scroller.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true;
@@ -62,6 +64,11 @@ class CategoryHomeController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {        
         self.fetchListOfCategories {};
+    }
+    
+    @objc private func notifyColor(notification: Notification) -> Void {
+        print("-------------------------------------------------------------------")
+        print("Notification color: \(notification.userInfo!["colorUpdate"] ?? "")");
     }
     
     @objc private func refreshed() {

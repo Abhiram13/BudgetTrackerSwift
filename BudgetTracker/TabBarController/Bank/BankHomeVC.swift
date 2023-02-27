@@ -33,7 +33,7 @@ class BankViewController: UIViewController {
 
         stackView.axis = .vertical;
         stackView.alignment = .fill;
-        stackView.spacing = 30;
+        stackView.spacing = 50;
         stackView.translatesAutoresizingMaskIntoConstraints = false;
         stackView.topAnchor.constraint(equalTo: scroller.topAnchor).isActive = true;
         stackView.widthAnchor.constraint(equalTo: scroller.widthAnchor).isActive = true;
@@ -54,6 +54,10 @@ class BankViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         fetchListOfBanks();
+    }
+    
+    private func postNotification() -> Void {
+        NotificationCenter.default.post(name: Notification.Name("color.update"), object: nil, userInfo: ["colorUpdate": UIColor.green]);
     }
     
     private func fetchListOfBanks() -> Void {
@@ -80,6 +84,7 @@ class BankViewController: UIViewController {
     
     @objc private func navigateToInsertBankVC() -> Void {
         self.present(alertController(), animated: true, completion: nil);
+        postNotification();
     }
     
     private func alertController() -> UIAlertController {
@@ -103,8 +108,10 @@ class BankViewController: UIViewController {
     }
 }
 
-class BankLabel: UILabel {
+class BankLabel: UIView {
     var name: String;
+    let label = UILabel();
+    let image = UIImage(systemName: "dollarsign.arrow.circlepath");
     
     required init?(coder: NSCoder) {
         self.name = "";
@@ -125,14 +132,25 @@ class BankLabel: UILabel {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection);
-        textColor = .SystemBasedText;
+        label.textColor = .SystemBasedText;
     }
     
     private func initalize(parent view: UIView) {
+        let imageView = UIImageView(image: image);
+        
+        addSubview(label);
+        addSubview(imageView);
+        
         translatesAutoresizingMaskIntoConstraints = false;
-        text = self.name;
-        textColor = .SystemBasedText;
-        font = .systemFont(ofSize: 20, weight: .medium)
         leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true;
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false;
+        imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true;
+        
+        label.text = self.name;
+        label.textColor = .SystemBasedText;
+        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false;
+        label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40).isActive = true;
     }
 }
