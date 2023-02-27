@@ -87,7 +87,7 @@ struct InsertTransaction: View {
     }
     
     private func Save() -> Void {
-//        let isDetailsProvided: Bool =  self.AlertMessage()
+//        let isDetailsProvided: Bool =  self.AlertMessage();
 //
         print("Category: \(self.selectedCategory.name)")
         print("From bank: \(self.selectedBank.name)")
@@ -97,6 +97,19 @@ struct InsertTransaction: View {
         print("Type: \(type.value)")
         print("Date: \(DateController.convertToString(date: selectedDate))");
         print("Due: \(isDue)");
+        
+        let status: StatusCode = TransactionServices.insert(payload: TransactionPayload(
+            categoryId: self.selectedCategory.rowId,
+            fromBankId: self.selectedBank.rowId,
+            toBankId: self.selectedToBank.rowId,
+            description: description,
+            amount: Int32(amount),
+            type: type.value.rawValue,
+            due: isDue ? 1 : 0,
+            date: DateController.convertToString(date: selectedDate)
+        ))
+        
+        print("Status is: \(status.rawValue)")
 //
 //        if isDetailsProvided {
 //            let isSuccess: Bool = transactionHelper.insert(payload: Transaction(

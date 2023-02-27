@@ -10,8 +10,8 @@ class Database {
         self.db = OpenDatabase();
         self.createBankTable();
         self.createCategoryTable();
-//        self.dropTable(type: .banks);
-        //self.createTransactionsTable();
+//        self.dropTable(type: .transactions);
+        self.createTransactionsTable();
     }
     
     private func fetchFileUrl() -> String {
@@ -73,8 +73,8 @@ class Database {
     private func createTransactionsTable() {
         let createTableString = """
             CREATE TABLE IF NOT EXISTS transactions(
-                id INTEGER PRIMARY KEY AUTOINCREMENT, rowId TEXT, categoryId INTEGER, description TEXT, toBankId INTEGER, amount INTEGER,
-                type TEXT, fromBankId INTEGER, due INTEGER, date TEXT
+                id INTEGER PRIMARY KEY AUTOINCREMENT, rowId TEXT, categoryId TEXT, description TEXT, toBankId TEXT, amount INTEGER,
+                type TEXT, fromBankId TEXT, due INTEGER, date TEXT
             );
         """;
         
@@ -83,27 +83,6 @@ class Database {
         } catch let error {
             print(error.localizedDescription);
         }
-    }
-    
-    private func createTransactionsTableDup() {
-        let createTableString = """
-            CREATE TABLE IF NOT EXISTS transactions(
-                id INTEGER PRIMARY KEY AUTOINCREMENT, category_id INTEGER, description TEXT, to_bank_id INTEGER, amount INTEGER, type TEXT, from_bank_id INTEGER, due INTEGER, date TEXT
-            );
-        """
-        var createTableStatement: OpaquePointer? = nil
-        
-        if sqlite3_prepare_v2(self.db, createTableString, -1, &createTableStatement, nil) == SQLITE_OK {
-            if sqlite3_step(createTableStatement) == SQLITE_DONE {
-                print("transactions table created.")
-            } else {
-                print("transactions table could not be created.")
-            }
-        } else {
-            print("CREATE TABLE transactions statement could not be prepared.")
-        }
-        
-        sqlite3_finalize(createTableStatement)
     }
     
     private func createCategoryTable() {

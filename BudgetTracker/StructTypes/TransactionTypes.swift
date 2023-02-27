@@ -41,6 +41,15 @@ class TransactionPayload {
     }
 }
 
+class TransactionWithId: TransactionPayload {
+    let rowId: String;
+    
+    init(rowId: String, categoryId: String, fromBankId: String, toBankId: String, description: String, amount: Int32, type: String, due: Int32, date: String) {
+        self.rowId = rowId;
+        super.init(categoryId: categoryId, fromBankId: fromBankId, toBankId: toBankId, description: description, amount: amount, type: type, due: due, date: date)
+    }
+}
+
 //class Transaction: TransactionPayload {
 //    let rowId: String;
 //    
