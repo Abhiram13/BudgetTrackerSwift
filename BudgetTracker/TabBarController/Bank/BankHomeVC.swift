@@ -19,10 +19,13 @@ class BankViewController: UIViewController {
         view.addSubview(scroller);
         view.addSubview(addButton);
         
+        self.navigationController?.navigationBar.prefersLargeTitles = true;
+        self.navigationItem.title = "Banks"
+        
         scroller.addSubview(stackView);
         scroller.addSubview(noBanksLabel);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
-        scroller.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
+        scroller.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true;
         scroller.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true;
         scroller.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true;
         scroller.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true;

@@ -18,15 +18,18 @@ class CategoryHomeController: UIViewController {
     }
     
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.prefersLargeTitles = true;
+        self.navigationItem.title = "Categories"
+        
         view.addSubview(scroller);
         view.addSubview(label);
         view.addSubview(button);
-        
+                
         view.backgroundColor = .SystemBasedBg;
         
         scroller.addSubview(stackView);
         scroller.translatesAutoresizingMaskIntoConstraints = false;
-        scroller.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true;
+        scroller.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true;
         scroller.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true;
         scroller.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true;
         scroller.contentSize = CGSize(width: view.frame.width, height: 2000);
@@ -91,6 +94,7 @@ class CategoryHomeController: UIViewController {
     
     private func addCatgeoryInStackAndAttachGesture(name: String, desc: String, emoji: String, color: String, rowId: String) -> Void {
         let gesture = CategoryGesture(target: self, action: #selector(editCategory));
+        
         gesture.catName = name;
         gesture.desc = desc;
         gesture.emoji = emoji;
@@ -107,6 +111,10 @@ class CategoryHomeController: UIViewController {
         stackView.subviews.forEach { categoryView in
             categoryView.removeFromSuperview();
         }
+    }
+    
+    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
+        print("Item swiped")
     }
     
     @objc private func addCategory() {

@@ -23,12 +23,12 @@ class TransactionPayload {
     let fromBankId: String;
     let toBankId: String;
     let description: String;
-    let amount: Int;
+    let amount: Int32;
     let type: String;
-    let due: Bool;
+    let due: Int32;
     let date: String;
     
-    init(categoryId: String, fromBankId: String, toBankId: String, description: String, amount: Int, type: String, due: Bool, date: String) {
+    init(categoryId: String, fromBankId: String, toBankId: String, description: String, amount: Int32, type: String, due: Int32, date: String) {
         self.categoryId = categoryId
         self.fromBankId = fromBankId
         self.toBankId = toBankId
