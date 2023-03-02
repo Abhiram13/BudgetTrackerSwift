@@ -63,8 +63,13 @@ class HomeViewController: UIViewController {
     private func addTransactionsToStackView() -> Void {
         self.removeTransactionsFromStackView();
         
-        for _ in transactions {
-            stackView.addArrangedSubview(TransactionView());
+        for transaction in transactions {
+            stackView.addArrangedSubview(TransactionView(
+                cName: transaction.categoryName,
+                color: transaction.categoryColor,
+                icon: transaction.categoryIcon,
+                amount: String(transaction.amount)
+            ));
         }
     }
     
@@ -158,15 +163,31 @@ class TransactionView: UIView {
     private let categoryName = UILabel();
     private let budgetLabel = UILabel();
     private let circle = UIView();
-    private let icon = UILabel();
+    private let iconLabel = UILabel();
     private let categoryTotal = UILabel();
-    private let amount = UILabel();
+    private let amountLabel = UILabel();
     
-    required init() {
-        super.init(frame: .zero)
+    private var categoryNameText: String;
+    private var colorText: String;
+    private var iconText: String;
+    private var amountText: String;
+    
+    
+    required init(cName: String, color: String, icon: String, amount: String) {
+        self.categoryNameText = cName;
+        self.colorText = color;
+        self.iconText = icon;
+        self.amountText = amount;
+        
+        super.init(frame: .zero);
     }
     
     required init?(coder: NSCoder) {
+        self.categoryNameText = "";
+        self.colorText = "";
+        self.iconText = "";
+        self.amountText = "";
+        
         super.init(coder: coder);
     }
     
@@ -187,7 +208,7 @@ class TransactionView: UIView {
         addSubview(circle);
         addSubview(categoryName);
         addSubview(categoryTotal);
-        addSubview(amount);
+        addSubview(amountLabel);
         
         self.categoryCircleConstraints();
         self.categoryNameConstraints();
@@ -201,22 +222,22 @@ class TransactionView: UIView {
         circle.heightAnchor.constraint(equalToConstant: 50).isActive = true;
         circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 7).isActive = true;
         circle.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true;
-        circle.addSubview(icon);
-        circle.backgroundColor = UIColor(hex: "#854efe");
+        circle.addSubview(iconLabel);
+        circle.backgroundColor = UIColor(hex: self.colorText);
         circle.layer.cornerRadius = 25;
         
-        icon.text = ("\\ud83d\\ude1d").decode();
-        icon.translatesAutoresizingMaskIntoConstraints = false;
-        icon.centerYAnchor.constraint(equalTo: circle.centerYAnchor).isActive = true;
-        icon.centerXAnchor.constraint(equalTo: circle.centerXAnchor).isActive = true;
-        icon.font = UIFont.systemFont(ofSize: 30);
+        iconLabel.text = self.iconText.decode();
+        iconLabel.translatesAutoresizingMaskIntoConstraints = false;
+        iconLabel.centerYAnchor.constraint(equalTo: circle.centerYAnchor).isActive = true;
+        iconLabel.centerXAnchor.constraint(equalTo: circle.centerXAnchor).isActive = true;
+        iconLabel.font = UIFont.systemFont(ofSize: 30);
     }
     
     private func categoryNameConstraints() -> Void {
         categoryName.translatesAutoresizingMaskIntoConstraints = false;
         categoryName.leadingAnchor.constraint(equalTo: circle.trailingAnchor, constant: 15).isActive = true;
         categoryName.topAnchor.constraint(equalTo: circle.topAnchor, constant: 2).isActive = true;
-        categoryName.text = "Sample Category";
+        categoryName.text = self.categoryNameText;
         categoryName.font = .systemFont(ofSize: 18, weight: .bold);
         categoryName.textColor = .black;
     }
@@ -231,12 +252,12 @@ class TransactionView: UIView {
     }
     
     private func amountLabelConstraints() -> Void {
-        amount.translatesAutoresizingMaskIntoConstraints = false;
-        amount.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true;
-        amount.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true;
-        amount.text = "₹45678";
-        amount.font = .systemFont(ofSize: 18, weight: .semibold);
-        amount.textColor = .black;
+        amountLabel.translatesAutoresizingMaskIntoConstraints = false;
+        amountLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12).isActive = true;
+        amountLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true;
+        amountLabel.text = "₹\(self.amountText)";
+        amountLabel.font = .systemFont(ofSize: 18, weight: .semibold);
+        amountLabel.textColor = .black;
     }
 }
 
