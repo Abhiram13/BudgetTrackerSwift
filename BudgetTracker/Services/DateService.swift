@@ -21,6 +21,9 @@ enum DateFormats: String {
 public class DateController {
     private static let dateFormatter = DateFormatter();
     
+    static let currentYear: String = String(Calendar.current.component(.year, from: Date()));
+    static let currentMonth: String = String(format: "%02d", Calendar.current.component(.month, from: Date()));
+    
     static func convertToDate(date: String, to format: DateFormats = .longDateWithTime) -> Date {
         dateFormatter.dateFormat = format.rawValue;
         let date = dateFormatter.date(from: date);

@@ -35,37 +35,39 @@ class TransactionServices {
         }
     }
 
-    static func list() -> [TransactionWithId] {
+    static func list(month: String? = nil, year: String? = nil) -> [TransactionByCategories] {
+        let month: String = month ?? DateController.currentMonth;
+        let year: String = year ?? DateController.currentYear;
+        
         let queryStatementString = """
-            SELECT COALESCE(rowId, ''), COALESCE(categoryId, ''), COALESCE(description, ''), COALESCE(toBankId, ''), amount, COALESCE(type, ''),
-            COALESCE(fromBankId, ''), due, COALESCE(date, '') FROM transactions;
+            SELECT
+                COALESCE(SUM(t.amount), 0) as amount,
+                c.rowId, c.name, c.icon, c.color
+            FROM transactions t
+            LEFT JOIN categories c ON c.rowId = t.categoryId
+            WHERE strftime('%m', t.date) = '\(month)' AND strftime('%Y', t.date) = '\(year)'
+            GROUP BY t.categoryId
         """
         var queryStatement: OpaquePointer? = nil
-        var transactions: [TransactionWithId] = []
+        var transactions: [TransactionByCategories] = []
 
         if sqlite3_prepare_v2(self.db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
             while sqlite3_step(queryStatement) == SQLITE_ROW {
-                let row_id = String(describing: String(cString: sqlite3_column_text(queryStatement, 0)));
-                let category = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)));
-                let description = String(describing: String(cString: sqlite3_column_text(queryStatement, 2)));
-                let toBank = String(describing: String(cString: sqlite3_column_text(queryStatement, 3)));
-                let amount = sqlite3_column_int(queryStatement, 4);
-                let type = String(describing: String(cString: sqlite3_column_text(queryStatement, 5)));
-                let fromBank = String(describing: String(cString: sqlite3_column_text(queryStatement, 6)));
-                let due = sqlite3_column_int(queryStatement, 7);
-                let date = String(describing: String(cString: sqlite3_column_text(queryStatement, 8)));
-
-                transactions.append(TransactionWithId(
-                    rowId: row_id,
-                    categoryId: category,
-                    fromBankId: fromBank,
-                    toBankId: toBank,
-                    description: description,
-                    amount: amount,
-                    type: type,
-                    due: due,
-                    date: date
-                ))
+                let amount = sqlite3_column_int(queryStatement, 0);
+                let categoryRowId = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)));
+                let categoryName = String(describing: String(cString: sqlite3_column_text(queryStatement, 2)));
+                let categoryIcon = String(describing: String(cString: sqlite3_column_text(queryStatement, 3)));
+                let categoryColor = String(describing: String(cString: sqlite3_column_text(queryStatement, 4)));
+                
+                transactions.append(TransactionByCategories(
+                    categoryId: categoryRowId,
+                    categoryIcon: categoryIcon,
+                    categoryColor: categoryColor,
+                    categoryName: categoryName,
+                    amount: Int(amount),
+                    transactionsCount: 0,
+                    percOfTotal: 0
+                ));
             }
         } else {
             Logger.create(title: "SELECT statement error", info: "SELECT statement could not be prepared at transaction list.");

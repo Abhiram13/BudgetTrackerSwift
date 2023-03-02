@@ -26,6 +26,10 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
 //        let _ = Database();
         self.tabBarController?.tabBar.isHidden = false;
+        
+        let x = TransactionServices.list();
+        
+        print("THE LIST IS: \(x)");
     }
     
     @objc private func navigateToAddView() {

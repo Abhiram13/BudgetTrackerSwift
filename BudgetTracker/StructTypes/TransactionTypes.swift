@@ -50,10 +50,12 @@ class TransactionWithId: TransactionPayload {
     }
 }
 
-//class Transaction: TransactionPayload {
-//    let rowId: String;
-//    
-//    override init(categoryId: String, fromBankId: String, toBankId: String, description: String, amount: Int, type: String, due: Bool, date: String) {
-//        
-//    }
-//}
+struct TransactionByCategories {
+    let categoryId: String;
+    let categoryIcon: String;
+    let categoryColor: String;
+    let categoryName: String;
+    let amount: Int;
+    let transactionsCount: Int;
+    let percOfTotal: Int;
+}
