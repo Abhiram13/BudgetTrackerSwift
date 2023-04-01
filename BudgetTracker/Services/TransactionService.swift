@@ -50,6 +50,7 @@ class TransactionServices {
         """
         var queryStatement: OpaquePointer? = nil
         var transactions: [TransactionByCategories] = []
+        let montlyAmount = 50000;
 
         if sqlite3_prepare_v2(self.db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
             while sqlite3_step(queryStatement) == SQLITE_ROW {
@@ -58,6 +59,8 @@ class TransactionServices {
                 let categoryName = String(describing: String(cString: sqlite3_column_text(queryStatement, 2)));
                 let categoryIcon = String(describing: String(cString: sqlite3_column_text(queryStatement, 3)));
                 let categoryColor = String(describing: String(cString: sqlite3_column_text(queryStatement, 4)));
+                let decimal = Double(amount)/Double(montlyAmount) * 100
+                let perc = decimal                
                 
                 transactions.append(TransactionByCategories(
                     categoryId: categoryRowId,
@@ -66,7 +69,7 @@ class TransactionServices {
                     categoryName: categoryName,
                     amount: Int(amount),
                     transactionsCount: 0,
-                    percOfTotal: 0
+                    percOfTotal: perc
                 ));
             }
         } else {

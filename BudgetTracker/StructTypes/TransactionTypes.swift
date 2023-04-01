@@ -57,5 +57,5 @@ struct TransactionByCategories {
     let categoryName: String;
     let amount: Int;
     let transactionsCount: Int;
-    let percOfTotal: Int;
+    let percOfTotal: Double;
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8309DA2729D7F8F400C8C856 /* TransactionByCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309DA2629D7F8F400C8C856 /* TransactionByCategory.swift */; };
 		833077A12998BB8700C587E4 /* CategoryTableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833077A02998BB8700C587E4 /* CategoryTableService.swift */; };
 		833077A32998BC0100C587E4 /* CategoryTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833077A22998BC0100C587E4 /* CategoryTypes.swift */; };
 		8356D775299FE24000F2D74A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8356D774299FE24000F2D74A /* Extensions.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8309DA2629D7F8F400C8C856 /* TransactionByCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionByCategory.swift; sourceTree = "<group>"; };
 		833077A02998BB8700C587E4 /* CategoryTableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableService.swift; sourceTree = "<group>"; };
 		833077A22998BC0100C587E4 /* CategoryTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTypes.swift; sourceTree = "<group>"; };
 		8356D774299FE24000F2D74A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			children = (
 				838747E3298E264800A6757F /* HomeViewController.swift */,
 				83ED910129A929A600B89885 /* AddTransactionView.swift */,
+				8309DA2629D7F8F400C8C856 /* TransactionByCategory.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				83ED910929A934C400B89885 /* BankHomeVC.swift in Sources */,
 				838B7E01299789A000A0BC26 /* LogController.swift in Sources */,
 				838B7DF729977CBB00A0BC26 /* NotificationService.swift in Sources */,
+				8309DA2729D7F8F400C8C856 /* TransactionByCategory.swift in Sources */,
 				838747E0298E264800A6757F /* AppDelegate.swift in Sources */,
 				838B7DFE2997841300A0BC26 /* LoggerTypes.swift in Sources */,
 				838B7DFC299783B000A0BC26 /* LoggerService.swift in Sources */,
